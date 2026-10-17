@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="StockDataView/StockDataView.csproj" Id="4e4c59d8-473f-4a9d-a02d-9c918dcf044b" />
+  <Project Path="WindowsFormsApp2/WindowsFormsApp2.csproj" Id="165f3ce0-03c6-45f6-bc0e-b6e63fece8b4" />
+</Solution>
