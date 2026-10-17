@@ -71,6 +71,7 @@
     <Compile Include="FormStockDataView_v2.Designer.cs">
       <DependentUpon>FormStockDataView_v2.cs</DependentUpon>
     </Compile>
+    <Compile Include="objChartManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormStockDataView_v2.resx">

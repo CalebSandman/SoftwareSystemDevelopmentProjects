@@ -14,15 +14,15 @@ namespace StockDataView_v2
     {
         //Data Properties
         #region Data Properties
-        public DateTime Date { get; set; }  // Date of the candlestick
-        public Decimal Open { get; set; }   // Open price of the candlestick
-        public Decimal High { get; set; }   // High price of the candlestick
-        public Decimal Low { get; set; }    // Low price of the candlestick
-        public Decimal Close { get; set; }  // Close price of the candlestick
-        public ulong Volume { get; set; }   // Volume of the candlestick
+        public DateTime Date { get; set; }  //Date of the candlestick
+        public Decimal Open { get; set; }   //Open price of the candlestick
+        public Decimal High { get; set; }   //High price of the candlestick
+        public Decimal Low { get; set; }    //Low price of the candlestick
+        public Decimal Close { get; set; }  //Close price of the candlestick
+        public ulong Volume { get; set; }   //Volume of the candlestick
 
-        public bool IsPeak { get; set; }  // Indicates if the candlestick is a peak
-        public bool IsValley { get; set; }    // Indicates if the candlestick is a valley
+        public bool IsPeak { get; set; }  //Indicates if the candlestick is a peak
+        public bool IsValley { get; set; }    //Indicates if the candlestick is a valley
         #endregion
 
         //Constructors
