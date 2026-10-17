@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Markup;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
-namespace WindowsFormsApp1
+namespace StockDataView_v2
 {
     internal class objCandlestick
     {

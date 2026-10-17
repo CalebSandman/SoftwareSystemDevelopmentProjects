@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4E4C59D8-473F-4A9D-A02D-9C918DCF044B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WindowsFormsApp1</RootNamespace>
-    <AssemblyName>WindowsFormsApp1</AssemblyName>
+    <RootNamespace>StockDataView</RootNamespace>
+    <AssemblyName>StockDataView</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

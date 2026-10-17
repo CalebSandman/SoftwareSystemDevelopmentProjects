@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace StockDataView_v2
 {
     partial class FormStockDataView_v2
     {
@@ -179,7 +179,7 @@
             // 
             // objCandlestickBindingSource
             // 
-            this.objCandlestickBindingSource.DataSource = typeof(WindowsFormsApp1.objCandlestick);
+            this.objCandlestickBindingSource.DataSource = typeof(StockDataView_v2.objCandlestick);
             // 
             // dateDataGridViewTextBoxColumn
             // 
