@@ -20,9 +20,6 @@ namespace StockDataView_v2
         public Decimal Low { get; set; }    //Low price of the candlestick
         public Decimal Close { get; set; }  //Close price of the candlestick
         public ulong Volume { get; set; }   //Volume of the candlestick
-
-        public bool IsPeak { get; set; }  //Indicates if the candlestick is a peak
-        public bool IsValley { get; set; }    //Indicates if the candlestick is a valley
         #endregion
 
         //Constructors

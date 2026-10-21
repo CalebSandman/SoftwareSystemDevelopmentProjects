@@ -11,11 +11,11 @@ using System.Xml.Serialization;
 
 namespace StockDataView_v2
 {
-    public partial class FormStockDataView_v2 : Form
+    public partial class FormStockDataView : Form
     {
         //Initialization
         #region Initialization
-        public FormStockDataView_v2()
+        public FormStockDataView()
         {
             InitializeComponent();
         }
@@ -46,6 +46,16 @@ namespace StockDataView_v2
         /// </summary>
         private void openFileDialogSelectFile_FileOk(object sender, CancelEventArgs e)
         {
+            //TESTING
+            foreach(string name in openFileDialogSelectFile.FileNames)
+            {
+                TEST_Form testForm = new TEST_Form();
+                testForm.Text = name;
+                testForm.Show();
+            }
+            return;
+
+
             Text = openFileDialogSelectFile.FileName;   //sets the title of the form to the selected file name
             candlestickData = ReadCandlestickDataFromCsv(openFileDialogSelectFile.FileName, true);  //reads the CSV file into a list of candlestick objects, applying date filtering
 
@@ -144,4 +154,14 @@ namespace StockDataView_v2
  *          (Use a new class derived from objCandlestick, peakValley finder)?
  *      Trendlines point from peaks to a low or valley to a high. Trends are valid if no candlesticks in the rectangle pierce it
  *          IDEA: trends go from peaks to valleys and vice versa only if there is not a higher/lower peak inbetween
+ *          
+ *      
+ *      
+ *      Start with a form that lets you select multiple files
+ *      Opens all files in their own form with chart
+ *          Each form has date selectors and update button. NO open file button
+ *      Mark peaks and valleys
+ *      Change candlestick colors to red and green for down and up days
+ *      
+ *      "internal class" to "public Static class"
  */

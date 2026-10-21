@@ -16,7 +16,7 @@ namespace StockDataView_v2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormStockDataView_v2());
+            Application.Run(new FormStockDataView());
         }
     }
 }

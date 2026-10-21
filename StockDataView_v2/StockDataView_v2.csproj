@@ -64,18 +64,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="objCandlestick.cs" />
-    <Compile Include="FormStockDataView_v2.cs">
+    <Compile Include="FormSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockDataView_v2.Designer.cs">
-      <DependentUpon>FormStockDataView_v2.cs</DependentUpon>
+    <Compile Include="FormSelector.Designer.cs">
+      <DependentUpon>FormSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="objCandlestick.cs" />
+    <Compile Include="FormStockDataView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockDataView.Designer.cs">
+      <DependentUpon>FormStockDataView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="objCandlestickDataReader.cs" />
     <Compile Include="objChartManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormStockDataView_v2.resx">
-      <DependentUpon>FormStockDataView_v2.cs</DependentUpon>
+    <Compile Include="TEST_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TEST_Form.Designer.cs">
+      <DependentUpon>TEST_Form.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="FormStockDataView.resx">
+      <DependentUpon>FormStockDataView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,6 +100,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\objCandlestick.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
