@@ -77,7 +77,6 @@
     <Compile Include="FormStockDataView.Designer.cs">
       <DependentUpon>FormStockDataView.cs</DependentUpon>
     </Compile>
-    <Compile Include="objCandlestickDataReader.cs" />
     <Compile Include="objChartManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +86,9 @@
     <Compile Include="TEST_Form.Designer.cs">
       <DependentUpon>TEST_Form.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormSelector.resx">
+      <DependentUpon>FormSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockDataView.resx">
       <DependentUpon>FormStockDataView.cs</DependentUpon>
     </EmbeddedResource>

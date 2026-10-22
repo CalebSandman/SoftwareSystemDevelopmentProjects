@@ -150,10 +150,6 @@
             this.volumeDataGridViewTextBoxColumn.HeaderText = "Volume";
             this.volumeDataGridViewTextBoxColumn.Name = "volumeDataGridViewTextBoxColumn";
             // 
-            // objCandlestickBindingSource
-            // 
-            this.objCandlestickBindingSource.DataSource = typeof(StockDataView_v2.objCandlestick);
-            // 
             // labelStartDate
             // 
             this.labelStartDate.AutoSize = true;
