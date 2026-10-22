@@ -32,8 +32,8 @@
             this.labelEndDate = new System.Windows.Forms.Label();
             this.buttonSelectFile = new System.Windows.Forms.Button();
             this.buttonOpenFile = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             this.openFileDialogSelectFile = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
@@ -75,21 +75,21 @@
             this.buttonOpenFile.UseVisualStyleBackColor = true;
             this.buttonOpenFile.Click += new System.EventHandler(this.buttonOpenFile_Click);
             // 
-            // dateTimePicker1
+            // dateTimePickerStartDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(12, 40);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(231, 20);
-            this.dateTimePicker1.TabIndex = 4;
-            this.dateTimePicker1.Value = new System.DateTime(2026, 6, 1, 0, 0, 0, 0);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(12, 40);
+            this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
+            this.dateTimePickerStartDate.Size = new System.Drawing.Size(231, 20);
+            this.dateTimePickerStartDate.TabIndex = 4;
+            this.dateTimePickerStartDate.Value = new System.DateTime(2026, 6, 1, 0, 0, 0, 0);
             // 
-            // dateTimePicker2
+            // dateTimePickerEndDate
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(12, 100);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(231, 20);
-            this.dateTimePicker2.TabIndex = 5;
-            this.dateTimePicker2.Value = new System.DateTime(2026, 9, 18, 0, 0, 0, 0);
+            this.dateTimePickerEndDate.Location = new System.Drawing.Point(12, 100);
+            this.dateTimePickerEndDate.Name = "dateTimePickerEndDate";
+            this.dateTimePickerEndDate.Size = new System.Drawing.Size(231, 20);
+            this.dateTimePickerEndDate.TabIndex = 5;
+            this.dateTimePickerEndDate.Value = new System.DateTime(2026, 9, 18, 0, 0, 0, 0);
             // 
             // openFileDialogSelectFile
             // 
@@ -105,8 +105,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(370, 157);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePickerEndDate);
+            this.Controls.Add(this.dateTimePickerStartDate);
             this.Controls.Add(this.buttonOpenFile);
             this.Controls.Add(this.buttonSelectFile);
             this.Controls.Add(this.labelEndDate);
@@ -124,8 +124,8 @@
         private System.Windows.Forms.Label labelEndDate;
         private System.Windows.Forms.Button buttonSelectFile;
         private System.Windows.Forms.Button buttonOpenFile;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStartDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerEndDate;
         private System.Windows.Forms.OpenFileDialog openFileDialogSelectFile;
     }
 }

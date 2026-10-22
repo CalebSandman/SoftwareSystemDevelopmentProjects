@@ -15,7 +15,6 @@ namespace StockDataView_v2
         public FormSelector()
         {
             InitializeComponent();
-            objChartManager chartManager = new objChartManager();  //initialize chart manager object
         }
 
         //From Events

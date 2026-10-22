@@ -18,11 +18,7 @@ namespace StockDataView_v2
         public FormStockDataView()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            objChartManager chartManager = new objChartManager();  //initialize chart manager object
         }
         #endregion
 

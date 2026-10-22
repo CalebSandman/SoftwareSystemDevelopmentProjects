@@ -29,22 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.openFileDialogSelectFile = new System.Windows.Forms.OpenFileDialog();
             this.buttonSelectFile = new System.Windows.Forms.Button();
             this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewStockData = new System.Windows.Forms.DataGridView();
-            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.openDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.highDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lowDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.closeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volumeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.objCandlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelStartDate = new System.Windows.Forms.Label();
             this.labelEndDate = new System.Windows.Forms.Label();
@@ -101,54 +95,11 @@
             this.dataGridViewStockData.AutoGenerateColumns = false;
             this.dataGridViewStockData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewStockData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewStockData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dateDataGridViewTextBoxColumn,
-            this.openDataGridViewTextBoxColumn,
-            this.highDataGridViewTextBoxColumn,
-            this.lowDataGridViewTextBoxColumn,
-            this.closeDataGridViewTextBoxColumn,
-            this.volumeDataGridViewTextBoxColumn});
             this.dataGridViewStockData.DataSource = this.objCandlestickBindingSource;
             this.dataGridViewStockData.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewStockData.Name = "dataGridViewStockData";
             this.dataGridViewStockData.Size = new System.Drawing.Size(776, 343);
             this.dataGridViewStockData.TabIndex = 6;
-            // 
-            // dateDataGridViewTextBoxColumn
-            // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            // 
-            // openDataGridViewTextBoxColumn
-            // 
-            this.openDataGridViewTextBoxColumn.DataPropertyName = "Open";
-            this.openDataGridViewTextBoxColumn.HeaderText = "Open";
-            this.openDataGridViewTextBoxColumn.Name = "openDataGridViewTextBoxColumn";
-            // 
-            // highDataGridViewTextBoxColumn
-            // 
-            this.highDataGridViewTextBoxColumn.DataPropertyName = "High";
-            this.highDataGridViewTextBoxColumn.HeaderText = "High";
-            this.highDataGridViewTextBoxColumn.Name = "highDataGridViewTextBoxColumn";
-            // 
-            // lowDataGridViewTextBoxColumn
-            // 
-            this.lowDataGridViewTextBoxColumn.DataPropertyName = "Low";
-            this.lowDataGridViewTextBoxColumn.HeaderText = "Low";
-            this.lowDataGridViewTextBoxColumn.Name = "lowDataGridViewTextBoxColumn";
-            // 
-            // closeDataGridViewTextBoxColumn
-            // 
-            this.closeDataGridViewTextBoxColumn.DataPropertyName = "Close";
-            this.closeDataGridViewTextBoxColumn.HeaderText = "Close";
-            this.closeDataGridViewTextBoxColumn.Name = "closeDataGridViewTextBoxColumn";
-            // 
-            // volumeDataGridViewTextBoxColumn
-            // 
-            this.volumeDataGridViewTextBoxColumn.DataPropertyName = "Volume";
-            this.volumeDataGridViewTextBoxColumn.HeaderText = "Volume";
-            this.volumeDataGridViewTextBoxColumn.Name = "volumeDataGridViewTextBoxColumn";
             // 
             // labelStartDate
             // 
@@ -181,40 +132,40 @@
             // 
             // chartStockData
             // 
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.AxisY2.LabelStyle.Enabled = false;
-            chartArea1.AxisY2.MajorGrid.Enabled = false;
-            chartArea1.AxisY2.MajorTickMark.Enabled = false;
-            chartArea1.Name = "AreaCandlesticks";
-            this.chartStockData.ChartAreas.Add(chartArea1);
+            chartArea3.AxisY.IsStartedFromZero = false;
+            chartArea3.AxisY2.LabelStyle.Enabled = false;
+            chartArea3.AxisY2.MajorGrid.Enabled = false;
+            chartArea3.AxisY2.MajorTickMark.Enabled = false;
+            chartArea3.Name = "AreaCandlesticks";
+            this.chartStockData.ChartAreas.Add(chartArea3);
             this.chartStockData.DataSource = this.objCandlestickBindingSource;
-            legend1.Name = "Legend1";
-            this.chartStockData.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chartStockData.Legends.Add(legend3);
             this.chartStockData.Location = new System.Drawing.Point(12, 12);
             this.chartStockData.Name = "chartStockData";
-            series1.ChartArea = "AreaCandlesticks";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
-            series1.Legend = "Legend1";
-            series1.Name = "SeriesOHLC";
-            series1.XValueMember = "Date";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series1.YValueMembers = "High, Low, Open, Close";
-            series1.YValuesPerPoint = 4;
-            series2.ChartArea = "AreaCandlesticks";
-            series2.Legend = "Legend1";
-            series2.Name = "SeriesVolume";
-            series2.XValueMember = "Date";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series2.YValueMembers = "Volume";
-            series2.YValuesPerPoint = 4;
-            this.chartStockData.Series.Add(series1);
-            this.chartStockData.Series.Add(series2);
+            series5.ChartArea = "AreaCandlesticks";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            series5.Legend = "Legend1";
+            series5.Name = "SeriesOHLC";
+            series5.XValueMember = "Date";
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series5.YValueMembers = "High, Low, Open, Close";
+            series5.YValuesPerPoint = 4;
+            series6.ChartArea = "AreaCandlesticks";
+            series6.Legend = "Legend1";
+            series6.Name = "SeriesVolume";
+            series6.XValueMember = "Date";
+            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series6.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series6.YValueMembers = "Volume";
+            series6.YValuesPerPoint = 4;
+            this.chartStockData.Series.Add(series5);
+            this.chartStockData.Series.Add(series6);
             this.chartStockData.Size = new System.Drawing.Size(776, 343);
             this.chartStockData.TabIndex = 10;
             this.chartStockData.Text = "chart1";
             // 
-            // FormStockDataView_v2
+            // FormStockDataView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -227,9 +178,8 @@
             this.Controls.Add(this.dateTimePickerEndDate);
             this.Controls.Add(this.dateTimePickerStartDate);
             this.Controls.Add(this.buttonSelectFile);
-            this.Name = "FormStockDataView_v2";
+            this.Name = "FormStockDataView";
             this.Text = "Stock Data View v2";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStockData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objCandlestickBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartStockData)).EndInit();
