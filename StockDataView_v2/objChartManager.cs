@@ -13,9 +13,10 @@ namespace StockDataView_v2
         //Data Properties
         #region Data Properties
         public List<objCandlestick> CandlestickData { get; set; }  //List to hold the candlestick data
+        public Chart Chart { get; set; }  //Chart object to hold the chart data
+        public string FilePath { get; set; }  //File path to the CSV file containing the candlestick data
         public List<int> PeakIndices { get; set; }  //List to hold the indices of the peaks in the candlestick data
         public List<int> ValleyIndices { get; set; }    //List to hold the indices of the valleys in the candlestick data
-        public Chart Chart { get; set; }  //Chart object to hold the chart data
         public DateTime StartDate { get; set; }  //Start date for the chart
         public DateTime EndDate { get; set; }    //End date for the chart
         #endregion
@@ -23,10 +24,10 @@ namespace StockDataView_v2
         //Constructors
         #region Constructors
         public objChartManager() { }
-
-        public objChartManager(List<objCandlestick> candlestickData)
+        public objChartManager(Chart chart)
         {
-            CandlestickData = candlestickData;
+            Chart = chart;
+            CandlestickData = new List<objCandlestick>();
             PeakIndices = new List<int>();
             ValleyIndices = new List<int>();
         }
@@ -37,35 +38,15 @@ namespace StockDataView_v2
 
         //Chart Creation-Functions
         #region Chart Creation
-
-        /// <summary>
-        /// <para>Reads the CSV file selected from openFileDialogSelectFile into a list of candlestick objects.</para>
-        /// <para>Can apply date filtering from StartDate and EndDate.</para>
-        /// </summary>
-        /// <param name="filePath">The path to the CSV file</param>
-        /// <param name="dateFilterOn">Indicates whether to apply date filtering</param>
-        /// <returns>A list of candlestick objects</returns>
-        private List<objCandlestick> ReadCandlestickDataFromCsv(string filePath, bool dateFilterOn = false)
-        {
-            var candlesticks = new List<objCandlestick>();  //initialize list of candlestick objects
-            var lines = System.IO.File.ReadAllLines(filePath);  //array of all lines in the CSV file
-            foreach (var line in lines.Skip(1)) //loops through each line while skipping the header line of CSV file
-            {
-                var currentCandlestick = new objCandlestick(line);  //creates a candlestick object from the data in each line
-                if (!dateFilterOn || DateInRange(currentCandlestick.Date, StartDate, EndDate))  //if date filter is off or the date of the current candlestick is within the selected range, add it to the list
-                    candlesticks.Add(currentCandlestick);   //adds the candlestick to the list
-            }
-
-            return candlesticks;    //returns the list of candlesticks
-        }
-
         /// <summary>
         /// Binds the list of candlestick objects to the Chart control and initializes the chart with the candlestick data.
         /// </summary>
-        public void BindChartData()
+        public void BindChartData(string path)
         {
+            CandlestickData = ReadCandlestickDataFromCsv(path, true);   //reads the candlestick data from the CSV file into the CandlestickData list
             Chart.DataSource = new BindingList<objCandlestick>(CandlestickData);    //binds the list of candlestick objects to the Chart control
             InitializeChart();   //initializes the chart with the candlestick data
+            Chart.DataBind();
         }
         #endregion
 
@@ -124,6 +105,27 @@ namespace StockDataView_v2
                 if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low)
                     ValleyIndices.Add(i);
             }
+        }
+
+        /// <summary>
+        /// <para>Reads the CSV file selected from openFileDialogSelectFile into a list of candlestick objects.</para>
+        /// <para>Can apply date filtering from StartDate and EndDate.</para>
+        /// </summary>
+        /// <param name="filePath">The path to the CSV file</param>
+        /// <param name="dateFilterOn">Indicates whether to apply date filtering</param>
+        /// <returns>A list of candlestick objects</returns>
+        private List<objCandlestick> ReadCandlestickDataFromCsv(string filePath, bool dateFilterOn = false)
+        {
+            var candlesticks = new List<objCandlestick>();  //initialize list of candlestick objects
+            var lines = System.IO.File.ReadAllLines(filePath);  //array of all lines in the CSV file
+            foreach (var line in lines.Skip(1)) //loops through each line while skipping the header line of CSV file
+            {
+                var currentCandlestick = new objCandlestick(line);  //creates a candlestick object from the data in each line
+                if (!dateFilterOn || DateInRange(currentCandlestick.Date, StartDate, EndDate))  //if date filter is off or the date of the current candlestick is within the selected range, add it to the list
+                    candlesticks.Add(currentCandlestick);   //adds the candlestick to the list
+            }
+
+            return candlesticks;    //returns the list of candlesticks
         }
 
         /// <summary>
