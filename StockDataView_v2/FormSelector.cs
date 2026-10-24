@@ -12,10 +12,13 @@ namespace StockDataView_v2
 {
     public partial class FormSelector : Form
     {
+        //Initialization
+        #region Initialization
         public FormSelector()
         {
             InitializeComponent();
         }
+        #endregion
 
         //From Events
         #region Form Events
@@ -33,7 +36,7 @@ namespace StockDataView_v2
         {
             foreach (string name in openFileDialogSelectFile.FileNames)
             {
-                FormStockDataView stockDataViewForm = new FormStockDataView();
+                FormStockDataView stockDataViewForm = new FormStockDataView(dateTimePickerStartDate.Value, dateTimePickerEndDate.Value);
                 stockDataViewForm.Text = name;
                 stockDataViewForm.Show();
             }

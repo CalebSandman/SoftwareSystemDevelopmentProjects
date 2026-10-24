@@ -20,6 +20,14 @@ namespace StockDataView_v2
             InitializeComponent();
             objChartManager chartManager = new objChartManager();  //initialize chart manager object
         }
+
+        public FormStockDataView(DateTime startDate, DateTime endDate)
+        {
+            InitializeComponent();
+            objChartManager chartManager = new objChartManager();  //initialize chart manager object
+            dateTimePickerStartDate.Value = startDate;
+            dateTimePickerEndDate.Value = endDate;
+        }
         #endregion
 
         //File Selection
