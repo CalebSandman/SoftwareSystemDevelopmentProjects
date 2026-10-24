@@ -86,9 +86,15 @@ namespace StockDataView_v2
         {
             if (CandlestickData.Count > 0)
             {
-                double maxVolume = (double)CandlestickData.Max(c => c.Volume);  //finds the maximum volume in the candlestick data
+                //Volume to bottom 20% of chart
+                decimal maxVolume = CandlestickData.Max(c => c.Volume);  //finds the maximum volume in the candlestick data
                 Chart.ChartAreas["AreaCandlesticks"].AxisY2.Minimum = 0;    //sets the minimum value of the secondary Y-axis to 0
-                Chart.ChartAreas["AreaCandlesticks"].AxisY2.Maximum = maxVolume * 5;   //sets the maximum value of the secondary Y-axis to 5 times the maximum volume. Keeps the volume in the bottom 20% of the chart area
+                Chart.ChartAreas["AreaCandlesticks"].AxisY2.Maximum = (double)(maxVolume * 5);   //sets the maximum value of the secondary Y-axis to 5 times the maximum volume. Keeps the volume in the bottom 20% of the chart area
+
+                //Candlesticks to top 80% of chart
+                decimal maxPrice = CandlestickData.Max(c => c.High);   //finds the maximum high price in the candlestick data
+                decimal minPrice = CandlestickData.Min(c => c.Low);    //finds the minimum low price in the candlestick data
+                Chart.ChartAreas["AreaCandlesticks"].AxisY.Minimum = (int)(minPrice - (maxPrice - minPrice) * 0.4m) - 1;    //sets the minimum value of the primary Y-axis to 40% below the minimum low price (top 80% of chart), rounded down to the nearest integer to keep whole number intervals
             }
         }
 
@@ -97,12 +103,12 @@ namespace StockDataView_v2
         /// </summary>
         private void IdentifyPeaksAndValleys()
         {
-            for (int i = 1; i < CandlestickData.Count - 1; i++)
+            for (int i = 1; i < CandlestickData.Count - 1; i++) //loops through the candlestick data starting from the second element and ending at the second to last element
             {
-                if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High)
+                if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High) //if the current candlestick's high is greater than the previous and next candlestick's high, it is a peak
                     PeakIndices.Add(i);
 
-                if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low)
+                if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low) //if the current candlestick's low is less than the previous and next candlestick's low, it is a valley
                     ValleyIndices.Add(i);
             }
         }
