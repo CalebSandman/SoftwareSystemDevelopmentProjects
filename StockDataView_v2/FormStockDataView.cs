@@ -25,8 +25,8 @@ namespace StockDataView_v2
         {
             InitializeComponent();
             objChartManager chartManager = new objChartManager();  //initialize chart manager object
-            dateTimePickerStartDate.Value = startDate;
-            dateTimePickerEndDate.Value = endDate;
+            dateTimePickerStartDate.Value = startDate;  //sets the value of the start date picker to the specified start date
+            dateTimePickerEndDate.Value = endDate;  //sets the value of the end date picker to the specified end date
         }
         #endregion
 
