@@ -22,6 +22,11 @@ namespace StockDataView_v2
 
         //From Events
         #region Form Events
+        /// <summary>
+        /// Opens the openFileDialogSelectFile dialog to select a CSV file when buttonSelectFile is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelectFile_Click(object sender, EventArgs e)
         {
             openFileDialogSelectFile.ShowDialog();  //shows the open file dialog to select a CSV file

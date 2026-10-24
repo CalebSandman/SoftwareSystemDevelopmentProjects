@@ -59,6 +59,9 @@ namespace StockDataView_v2
             return candlesticks;    //returns the list of candlesticks
         }
 
+        /// <summary>
+        /// Binds the list of candlestick objects to the Chart control and initializes the chart with the candlestick data.
+        /// </summary>
         public void BindChartData()
         {
             Chart.DataSource = new BindingList<objCandlestick>(CandlestickData);    //binds the list of candlestick objects to the Chart control
@@ -68,27 +71,14 @@ namespace StockDataView_v2
 
         //Annotations-Functions
         #region Annotations
-        public void IdentifyPeaksAndValleys()
-            {
-                for (int i = 1; i < CandlestickData.Count - 1; i++)
-                {
-                    if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High)
-                        PeakIndices.Add(i);
-               
-                    if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low)
-                        ValleyIndices.Add(i);
-                }
-            }
-
-            public void LineAnnotations()
+        /// <summary>
+        /// Creates annotations for the peaks and valleys in the candlestick data and adds them to the chart.
+        /// </summary>
+        public void PeakAndValleyAnnotations()
             {
                 //set chart area and clear any existing annotations (avoids overlap)
                 ChartArea mainArea = Chart.ChartAreas[0];
-                Chart.Annotations.Clear();
-
-                PeakToLowAnnotations(mainArea);
-                ValleyToHighAnnotations(mainArea);
-            
+                Chart.Annotations.Clear();            
             }
         #endregion
 
@@ -121,6 +111,24 @@ namespace StockDataView_v2
             }
         }
 
+        /// <summary>
+        /// Identifies the peaks and valleys in the candlestick data and stores their indices in PeakIndices and ValleyIndices lists.
+        /// </summary>
+        private void IdentifyPeaksAndValleys()
+        {
+            for (int i = 1; i < CandlestickData.Count - 1; i++)
+            {
+                if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High)
+                    PeakIndices.Add(i);
+
+                if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low)
+                    ValleyIndices.Add(i);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the chart by formatting it and identifying peaks and valleys in the candlestick data.
+        /// </summary>
         private void InitializeChart()
         {
             FormatChart();    //formats the chart to display the candlestick data
@@ -129,23 +137,7 @@ namespace StockDataView_v2
         #endregion
 
         #region Annotations-Helpers
-        private void PeakToLowAnnotations(ChartArea chart)
-        {
-            foreach(int peakIndex in PeakIndices)
-            {
-                objCandlestick nextCandlestick = CandlestickData[peakIndex + 1];
-                objCandlestick currentCandlestick = CandlestickData[peakIndex];
-                /*
-                 * Requirements for valid trend:
-                 * 1. 
-                 */
-            }
-        }
-
-        private void ValleyToHighAnnotations(ChartArea chart)
-        {
-
-        }
+        
         #endregion
         #endregion
         #endregion
