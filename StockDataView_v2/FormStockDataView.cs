@@ -15,6 +15,7 @@ namespace StockDataView_v2
     {
         //Initialization
         #region Initialization
+        #region Constructors
         objChartManager chartManager;  //chart manager object to manage the chartStockData chart
         public FormStockDataView()
         {
@@ -31,10 +32,30 @@ namespace StockDataView_v2
         }
         #endregion
 
+        /// <summary>
+        /// Initializes the chart date range and binds the stock data for the form.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event data.</param>
+        private void FormStockDataView_Load(object sender, EventArgs e)
+        {
+            chartManager.StartDate = dateTimePickerStartDate.Value;  //sets the start date of the chart manager to the value of the start date picker
+            chartManager.EndDate = dateTimePickerEndDate.Value;  //sets the end date of the chart manager to the value of the end date picker
+            chartManager.BindChartData(Text);  //binds the chart data to the chart manager using the text of the form as the file path
+        }
+        #endregion
+
         //Form Events
         #region Form Events
+        /// <summary>
+        /// Updates the chart date range and refreshes the chart data for the selected period.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void buttonUpdateData_Click(object sender, EventArgs e)
         {
+            chartManager.StartDate = dateTimePickerStartDate.Value;  //sets the start date of the chart manager to the value of the start date picker
+            chartManager.EndDate = dateTimePickerEndDate.Value;  //sets the end date of the chart manager to the value of the end date picker
             chartManager.BindChartData(Text);  //binds the chart data to the chart manager using the text of the form as the file path
         }
         #endregion

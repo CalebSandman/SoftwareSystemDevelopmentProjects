@@ -73,6 +73,7 @@
             this.buttonOpenFile.TabIndex = 1;
             this.buttonOpenFile.Text = "Open";
             this.buttonOpenFile.UseVisualStyleBackColor = true;
+            this.buttonOpenFile.Visible = false;
             this.buttonOpenFile.Click += new System.EventHandler(this.buttonOpenFile_Click);
             // 
             // dateTimePickerStartDate
@@ -99,6 +100,7 @@
             this.openFileDialogSelectFile.InitialDirectory = "C:\\Users\\mudki\\OneDrive\\Documents\\USF\\Fall 26\\Software System Development (COP436" +
     "5)\\Dev\\Stock Data";
             this.openFileDialogSelectFile.Multiselect = true;
+            this.openFileDialogSelectFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogSelectFile_FileOk);
             // 
             // FormSelector
             // 

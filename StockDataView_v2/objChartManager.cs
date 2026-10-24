@@ -43,9 +43,10 @@ namespace StockDataView_v2
         /// </summary>
         public void BindChartData(string path)
         {
-            ReadCandlestickDataFromCsv(path, true);   //reads the candlestick data from the CSV file into the CandlestickData list
+            CandlestickData = ReadCandlestickDataFromCsv(path, true);   //reads the candlestick data from the CSV file into the CandlestickData list
             Chart.DataSource = new BindingList<objCandlestick>(CandlestickData);    //binds the list of candlestick objects to the Chart control
             InitializeChart();   //initializes the chart with the candlestick data
+            Chart.DataBind();
         }
         #endregion
 

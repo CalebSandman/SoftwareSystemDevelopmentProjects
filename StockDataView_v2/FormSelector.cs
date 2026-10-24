@@ -41,10 +41,20 @@ namespace StockDataView_v2
         {
             foreach (string name in openFileDialogSelectFile.FileNames)
             {
-                FormStockDataView stockDataViewForm = new FormStockDataView(dateTimePickerStartDate.Value, dateTimePickerEndDate.Value);
-                stockDataViewForm.Text = name;
-                stockDataViewForm.Show();
+                FormStockDataView stockDataViewForm = new FormStockDataView(dateTimePickerStartDate.Value, dateTimePickerEndDate.Value);    //creates a new instance of FormStockDataView for each selected file
+                stockDataViewForm.Text = name;  //sets the title of the FormStockDataView to the name of the selected file
+                stockDataViewForm.Show();   //shows the FormStockDataView
             }
+        }
+
+        /// <summary>
+        /// Shows the Open File button after a file(s) has been selected.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data for the file selection completion.</param>
+        private void openFileDialogSelectFile_FileOk(object sender, CancelEventArgs e)
+        {
+            buttonOpenFile.Visible = true;  //makes the buttonOpenFile visible after files are selected
         }
         #endregion
     }
