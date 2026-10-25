@@ -102,6 +102,7 @@
             chartArea1.AxisY2.MajorTickMark.Enabled = false;
             chartArea1.Name = "AreaCandlesticks";
             this.chartStockData.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
             legend1.Name = "Legend1";
             this.chartStockData.Legends.Add(legend1);
             this.chartStockData.Location = new System.Drawing.Point(12, 12);
