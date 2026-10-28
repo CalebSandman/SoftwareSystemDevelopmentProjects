@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -101,7 +102,24 @@
             chartArea1.AxisY2.MajorGrid.Enabled = false;
             chartArea1.AxisY2.MajorTickMark.Enabled = false;
             chartArea1.Name = "AreaCandlesticks";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 70F;
+            chartArea1.Position.Width = 94F;
+            chartArea1.Position.X = 3F;
+            chartArea1.Position.Y = 3F;
+            chartArea2.AlignWithChartArea = "AreaCandlesticks";
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisY.LabelStyle.Format = "#,##0,,\\M";
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.Name = "AreaVolume";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 25F;
+            chartArea2.Position.Width = 94F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 75F;
             this.chartStockData.ChartAreas.Add(chartArea1);
+            this.chartStockData.ChartAreas.Add(chartArea2);
             legend1.Enabled = false;
             legend1.Name = "Legend1";
             this.chartStockData.Legends.Add(legend1);
@@ -118,12 +136,11 @@
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             series1.YValueMembers = "High, Low, Open, Close";
             series1.YValuesPerPoint = 4;
-            series2.ChartArea = "AreaCandlesticks";
+            series2.ChartArea = "AreaVolume";
             series2.Legend = "Legend1";
             series2.Name = "SeriesVolume";
             series2.XValueMember = "Date";
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
             series2.YValueMembers = "Volume";
             series2.YValuesPerPoint = 4;
             this.chartStockData.Series.Add(series1);

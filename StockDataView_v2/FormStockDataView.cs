@@ -91,4 +91,7 @@ namespace StockDataView_v2
  *      Change candlestick colors to red and green for down and up days
  *      
  *      "internal class" to "public Static class"
+ *      
+ *      
+ *      CHANGE BACK TO TWO CHART AREAS
  */

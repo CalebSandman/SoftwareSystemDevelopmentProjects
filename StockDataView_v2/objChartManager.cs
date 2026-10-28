@@ -106,11 +106,11 @@ namespace StockDataView_v2
         }
 
         /// <summary>
-        /// Identifies the peaks and valleys in the candlestick data and stores their indices in PeakIndices and ValleyIndices lists.
+        /// Identifies the peaks and valleys in the candlestick data and stores their indices in the ExtremaIndices lists.
         /// </summary>
         private void IdentifyPeaksAndValleys()
         {
-            ExtremaIndices.Clear();
+            ExtremaIndices.Clear(); //clears the ExtremaIndices list in preperation for the list to be remade
             for (int i = 1; i < CandlestickData.Count - 1; i++) //loops through the candlestick data starting from the second element and ending at the second to last element
             {
                 if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High) //if the current candlestick's high is greater than the previous and next candlestick's high, it is a peak
@@ -154,7 +154,7 @@ namespace StockDataView_v2
         /// </summary>
         private void InitializeChart()
         {
-            FormatChart();    //formats the chart to display the candlestick data
+            //FormatChart();    //formats the chart to display the candlestick data
             IdentifyPeaksAndValleys();   //identifies the peaks and valleys in the candlestick data
         }
         #endregion
@@ -181,8 +181,8 @@ namespace StockDataView_v2
             circle.AnchorAlignment = System.Drawing.ContentAlignment.MiddleCenter;
 
             //Set the size of the circle
-            circle.Width = 1;
-            circle.Height = 1.5;
+            circle.Width = 0.7;
+            circle.Height = 1.2;
 
             //Set the color and style of the circle
             circle.BackColor = Color.Yellow;
