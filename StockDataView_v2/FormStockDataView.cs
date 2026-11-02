@@ -63,6 +63,16 @@ namespace StockDataView_v2
         #endregion
 
 
+
+
+
+
+
+/*
+* Ignore the below code.
+* It is for future development.
+*/
+
         //Timer (Unused)
         #region Timer (Unused)
         int counter = 0;
@@ -70,6 +80,24 @@ namespace StockDataView_v2
         {
             counter++;
             Text = $"Counter: {counter}";
+        }
+        #endregion
+
+        //Rubberbanding
+        #region Rubberbanding
+        private void chartStockData_MouseDown(object sender, MouseEventArgs e)
+        {
+            Text = "aaaaaaaa";
+        }
+
+        private void chartStockData_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void chartStockData_MouseMove(object sender, MouseEventArgs e)
+        {
+
         }
         #endregion
     }
@@ -90,8 +118,10 @@ namespace StockDataView_v2
  *      Mark peaks and valleys
  *      Change candlestick colors to red and green for down and up days
  *      
- *      "internal class" to "public Static class"
+ *      "internal class" to "public Static class" (not doing
  *      
  *      
  *      CHANGE BACK TO TWO CHART AREAS
+ *      
+ *      Rubberbanding for the trend rectangles. Verify that the trend is valid for the rectangle to persist
  */

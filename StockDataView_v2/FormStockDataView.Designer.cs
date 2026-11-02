@@ -32,6 +32,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem1 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
+            System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem2 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
+            System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem3 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
+            System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem4 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
@@ -47,7 +51,7 @@
             // dateTimePickerStartDate
             // 
             this.dateTimePickerStartDate.CustomFormat = "";
-            this.dateTimePickerStartDate.Location = new System.Drawing.Point(12, 418);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(341, 534);
             this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             this.dateTimePickerStartDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerStartDate.TabIndex = 4;
@@ -55,7 +59,7 @@
             // 
             // dateTimePickerEndDate
             // 
-            this.dateTimePickerEndDate.Location = new System.Drawing.Point(588, 418);
+            this.dateTimePickerEndDate.Location = new System.Drawing.Point(828, 534);
             this.dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             this.dateTimePickerEndDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerEndDate.TabIndex = 5;
@@ -68,7 +72,7 @@
             // labelStartDate
             // 
             this.labelStartDate.AutoSize = true;
-            this.labelStartDate.Location = new System.Drawing.Point(12, 402);
+            this.labelStartDate.Location = new System.Drawing.Point(341, 518);
             this.labelStartDate.Name = "labelStartDate";
             this.labelStartDate.Size = new System.Drawing.Size(55, 13);
             this.labelStartDate.TabIndex = 7;
@@ -77,7 +81,7 @@
             // labelEndDate
             // 
             this.labelEndDate.AutoSize = true;
-            this.labelEndDate.Location = new System.Drawing.Point(585, 402);
+            this.labelEndDate.Location = new System.Drawing.Point(825, 518);
             this.labelEndDate.Name = "labelEndDate";
             this.labelEndDate.Size = new System.Drawing.Size(52, 13);
             this.labelEndDate.TabIndex = 8;
@@ -85,7 +89,7 @@
             // 
             // buttonUpdateData
             // 
-            this.buttonUpdateData.Location = new System.Drawing.Point(257, 373);
+            this.buttonUpdateData.Location = new System.Drawing.Point(547, 489);
             this.buttonUpdateData.Name = "buttonUpdateData";
             this.buttonUpdateData.Size = new System.Drawing.Size(275, 65);
             this.buttonUpdateData.TabIndex = 9;
@@ -120,7 +124,19 @@
             chartArea2.Position.Y = 75F;
             this.chartStockData.ChartAreas.Add(chartArea1);
             this.chartStockData.ChartAreas.Add(chartArea2);
-            legend1.Enabled = false;
+            legendItem1.Color = System.Drawing.Color.Lime;
+            legendItem1.Name = "Bullish (Up)";
+            legendItem2.Color = System.Drawing.Color.Red;
+            legendItem2.Name = "Bearish (Down)";
+            legendItem3.Color = System.Drawing.Color.Yellow;
+            legendItem3.Name = "Peak/Valley";
+            legendItem4.Color = System.Drawing.Color.Blue;
+            legendItem4.Name = "Volume";
+            legend1.CustomItems.Add(legendItem1);
+            legend1.CustomItems.Add(legendItem2);
+            legend1.CustomItems.Add(legendItem3);
+            legend1.CustomItems.Add(legendItem4);
+            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
             legend1.Name = "Legend1";
             this.chartStockData.Legends.Add(legend1);
             this.chartStockData.Location = new System.Drawing.Point(12, 12);
@@ -130,6 +146,7 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
             series1.Color = System.Drawing.Color.Black;
             series1.CustomProperties = "PriceUpColor=Lime, PriceDownColor=Red";
+            series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "SeriesOHLC";
             series1.XValueMember = "Date";
@@ -137,6 +154,7 @@
             series1.YValueMembers = "High, Low, Open, Close";
             series1.YValuesPerPoint = 4;
             series2.ChartArea = "AreaVolume";
+            series2.IsVisibleInLegend = false;
             series2.Legend = "Legend1";
             series2.Name = "SeriesVolume";
             series2.XValueMember = "Date";
@@ -145,15 +163,18 @@
             series2.YValuesPerPoint = 4;
             this.chartStockData.Series.Add(series1);
             this.chartStockData.Series.Add(series2);
-            this.chartStockData.Size = new System.Drawing.Size(776, 343);
+            this.chartStockData.Size = new System.Drawing.Size(1321, 449);
             this.chartStockData.TabIndex = 10;
             this.chartStockData.Text = "chart1";
+            this.chartStockData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseDown);
+            this.chartStockData.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseMove);
+            this.chartStockData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseUp);
             // 
             // FormStockDataView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1345, 566);
             this.Controls.Add(this.chartStockData);
             this.Controls.Add(this.buttonUpdateData);
             this.Controls.Add(this.labelEndDate);

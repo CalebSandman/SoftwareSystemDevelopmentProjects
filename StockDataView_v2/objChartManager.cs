@@ -154,6 +154,10 @@ namespace StockDataView_v2
         /// </summary>
         private void InitializeChart()
         {
+            /*
+             * FormatChart() exist for the purpose of having only one chart area for the candlesticks and volume
+             * Currently disabled
+             */
             //FormatChart();    //formats the chart to display the candlestick data
             IdentifyPeaksAndValleys();   //identifies the peaks and valleys in the candlestick data
         }
@@ -170,24 +174,24 @@ namespace StockDataView_v2
             EllipseAnnotation circle = new EllipseAnnotation(); //create new ellipse annotation
 
             //Link to specific axis system
-            circle.IsSizeAlwaysRelative = true;
-            circle.AxisX = Chart.ChartAreas[0].AxisX;
-            circle.AxisY = Chart.ChartAreas[0].AxisY;
-            circle.ClipToChartArea = Chart.ChartAreas[0].Name;
+            circle.IsSizeAlwaysRelative = true;     //ensures the size of the annotation is relative to the chart area
+            circle.AxisX = Chart.ChartAreas[0].AxisX;   //link the annotation to the X-axis of the chart area
+            circle.AxisY = Chart.ChartAreas[0].AxisY;   //link the annotation to the Y-axis of the chart area
+            circle.ClipToChartArea = Chart.ChartAreas[0].Name;  //ensures the annotation is clipped to the chart area
 
             //Anchor to the specific candlestick data point
-            circle.AnchorDataPoint = point;
-            circle.AnchorY = yValue;
-            circle.AnchorAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            circle.AnchorDataPoint = point; //anchor the annotation to the specific data point
+            circle.AnchorY = yValue;    //set the Y-axis value of the annotation to the specified yValue
+            circle.AnchorAlignment = System.Drawing.ContentAlignment.MiddleCenter;  //align the annotation to the center of the data point
 
             //Set the size of the circle
-            circle.Width = 0.7;
-            circle.Height = 1.2;
+            circle.Width = 0.5;
+            circle.Height = 1.0;
 
             //Set the color and style of the circle
-            circle.BackColor = Color.Yellow;
-            circle.LineColor = Color.Black;
-            circle.LineWidth = 1;
+            circle.BackColor = Color.Yellow;    //set backgroung color to yellow
+            circle.LineColor = Color.Black;     //set border color to black
+            circle.LineWidth = 1;               //set border width to 1
 
             Chart.Annotations.Add(circle);  //add the elipse annotation to the chart
         }
