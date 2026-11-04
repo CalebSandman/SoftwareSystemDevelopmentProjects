@@ -1,4 +1,4 @@
-﻿namespace StockDataView_v2
+﻿namespace StockDataView_v3
 {
     partial class FormStockDataView
     {

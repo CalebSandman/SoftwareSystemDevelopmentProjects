@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace StockDataView_v2
+namespace StockDataView_v3
 {
     internal class objChartManager
     {

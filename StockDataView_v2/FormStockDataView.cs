@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace StockDataView_v2
+namespace StockDataView_v3
 {
     public partial class FormStockDataView : Form
     {

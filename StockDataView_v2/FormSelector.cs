@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StockDataView_v2
+namespace StockDataView_v3
 {
     public partial class FormSelector : Form
     {

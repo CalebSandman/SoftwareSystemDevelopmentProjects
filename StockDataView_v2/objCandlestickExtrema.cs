@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockDataView_v2
+namespace StockDataView_v3
 {
     internal class objCandlestickExtrema : objCandlestick
     {
