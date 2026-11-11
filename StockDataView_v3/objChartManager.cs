@@ -17,6 +17,8 @@ namespace StockDataView_v3
         public Chart Chart { get; set; }  //Chart object to hold the chart data
         public string FilePath { get; set; }  //File path to the CSV file containing the candlestick data
         public List<int> ExtremaIndices { get; set; }  //List to hold the indices of the extrema in the candlestick data
+        public List<int> PeakIndices { get; set; }
+        public List<int> ValleyIndices { get; set; }
         public DateTime StartDate { get; set; }  //Start date for the chart
         public DateTime EndDate { get; set; }    //End date for the chart
         #endregion
@@ -57,6 +59,7 @@ namespace StockDataView_v3
         public void DrawPeakAndValleyAnnotations()
         {
             Chart.Annotations.Clear();  //clear any existing annotations (avoids overlap)
+            //Chart.Series["PeaksAndValleys"].Points.Clear();
             
             foreach (int extremaIndex in ExtremaIndices)
             {
@@ -66,6 +69,23 @@ namespace StockDataView_v3
                     AddPeakValleyAnnotation(currentPoint, currentPoint.YValues[0]); //add annotation to data point's high
                 if (CandlestickData[extremaIndex].IsValley) //if the current data point's candlestick is a valley
                     AddPeakValleyAnnotation(currentPoint, currentPoint.YValues[1]); //add annotation to data point's low
+            }
+        }
+
+        public void DrawPeakAndValleyMarkers()
+        {
+            Chart.Series["Peaks"].Points.Clear();
+
+            foreach (objCandlestickExtrema candlestick in CandlestickData)
+            {
+                DataPoint newPeak = new DataPoint();
+                newPeak.SetValueXY(candlestick.Date, candlestick.High);
+
+                if (!candlestick.IsPeak)
+                {
+                    newPeak.IsEmpty = true;
+                }
+                Chart.Series["Peaks"].Points.Add(newPeak);
             }
         }
         #endregion
@@ -117,6 +137,8 @@ namespace StockDataView_v3
                 {
                     CandlestickData[i].IsPeak = true;   //sets the IsPeak property of the current candlestick to true
                     ExtremaIndices.Add(i);  //adds the index of the current candlestick to the ExtremaIndices list
+
+                    //PeakIndices.Add(i);
                 }
 
                 if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low) //if the current candlestick's low is less than the previous and next candlestick's low, it is a valley
@@ -124,6 +146,8 @@ namespace StockDataView_v3
                     CandlestickData[i].IsValley = true;  //sets the IsValley property of the current candlestick to true
                     if (!ExtremaIndices.Contains(i))    //if the index of the current candlestick is not already in the ExtremaIndices list, add it
                         ExtremaIndices.Add(i);
+
+                    //ValleyIndices.Add(i);
                 }
             }
         }
@@ -194,6 +218,11 @@ namespace StockDataView_v3
             circle.LineWidth = 1;               //set border width to 1
 
             Chart.Annotations.Add(circle);  //add the elipse annotation to the chart
+        }
+
+        private void AddPeakValleyMarker(DataPoint point, double yValue)
+        {
+            Chart.Series["PeaksAndValleys"].Points.AddXY(point.XValue, yValue);
         }
         #endregion
         #endregion

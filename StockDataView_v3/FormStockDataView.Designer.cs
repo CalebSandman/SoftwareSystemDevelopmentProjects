@@ -38,6 +38,8 @@
             System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem4 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
             this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -45,7 +47,9 @@
             this.labelEndDate = new System.Windows.Forms.Label();
             this.buttonUpdateData = new System.Windows.Forms.Button();
             this.chartStockData = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.objCandlestickExtremaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chartStockData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objCandlestickExtremaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dateTimePickerStartDate
@@ -147,6 +151,7 @@
             series1.Color = System.Drawing.Color.Black;
             series1.CustomProperties = "PriceUpColor=Lime, PriceDownColor=Red";
             series1.IsVisibleInLegend = false;
+            series1.IsXValueIndexed = true;
             series1.Legend = "Legend1";
             series1.Name = "SeriesOHLC";
             series1.XValueMember = "Date";
@@ -155,20 +160,36 @@
             series1.YValuesPerPoint = 4;
             series2.ChartArea = "AreaVolume";
             series2.IsVisibleInLegend = false;
+            series2.IsXValueIndexed = true;
             series2.Legend = "Legend1";
             series2.Name = "SeriesVolume";
             series2.XValueMember = "Date";
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             series2.YValueMembers = "Volume";
             series2.YValuesPerPoint = 4;
+            series3.ChartArea = "AreaCandlesticks";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.IsXValueIndexed = true;
+            series3.Legend = "Legend1";
+            series3.MarkerBorderColor = System.Drawing.Color.Black;
+            series3.MarkerColor = System.Drawing.Color.Yellow;
+            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series3.Name = "Peaks";
+            series3.Points.Add(dataPoint1);
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             this.chartStockData.Series.Add(series1);
             this.chartStockData.Series.Add(series2);
+            this.chartStockData.Series.Add(series3);
             this.chartStockData.Size = new System.Drawing.Size(1321, 449);
             this.chartStockData.TabIndex = 10;
             this.chartStockData.Text = "chart1";
             this.chartStockData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseDown);
             this.chartStockData.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseMove);
             this.chartStockData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseUp);
+            // 
+            // objCandlestickExtremaBindingSource
+            // 
+            this.objCandlestickExtremaBindingSource.DataSource = typeof(StockDataView_v3.objCandlestickExtrema);
             // 
             // FormStockDataView
             // 
@@ -185,6 +206,7 @@
             this.Text = "Stock Data View v2";
             this.Load += new System.EventHandler(this.FormStockDataView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartStockData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objCandlestickExtremaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,6 +226,7 @@
         private System.Windows.Forms.Label labelEndDate;
         private System.Windows.Forms.Button buttonUpdateData;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStockData;
+        private System.Windows.Forms.BindingSource objCandlestickExtremaBindingSource;
     }
 }
 
