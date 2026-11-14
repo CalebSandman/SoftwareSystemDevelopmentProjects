@@ -51,31 +51,14 @@ namespace StockDataView_v3
         }
         #endregion
 
-        //Annotations-Functions
-        #region Annotations
-        /// <summary>
-        /// Creates annotations for the peaks and valleys in the candlestick data and adds them to the chart.
-        /// </summary>
-        public void DrawPeakAndValleyAnnotations()
-        {
-            Chart.Annotations.Clear();  //clear any existing annotations (avoids overlap)
-            //Chart.Series["PeaksAndValleys"].Points.Clear();
-            
-            foreach (int extremaIndex in ExtremaIndices)
-            {
-                DataPoint currentPoint = Chart.Series["SeriesOHLC"].Points[extremaIndex];   //gets the data point at the current index
-
-                if (CandlestickData[extremaIndex].IsPeak)   //if the current data point's candlestick is a peak
-                    AddPeakValleyAnnotation(currentPoint, currentPoint.YValues[0]); //add annotation to data point's high
-                if (CandlestickData[extremaIndex].IsValley) //if the current data point's candlestick is a valley
-                    AddPeakValleyAnnotation(currentPoint, currentPoint.YValues[1]); //add annotation to data point's low
-            }
-        }
-
+        //Peaks and Valleys-Functions
+        #region Peaks and Valleys
         public void DrawPeakAndValleyMarkers()
         {
             Chart.Series["Peaks"].Points.Clear();
+            Chart.Series["Valleys"].Points.Clear();
 
+            //draw peaks
             foreach (objCandlestickExtrema candlestick in CandlestickData)
             {
                 DataPoint newPeak = new DataPoint();
@@ -86,6 +69,19 @@ namespace StockDataView_v3
                     newPeak.IsEmpty = true;
                 }
                 Chart.Series["Peaks"].Points.Add(newPeak);
+            }
+
+            //draw valleys
+            foreach (objCandlestickExtrema candlestick in CandlestickData)
+            {
+                DataPoint newValley = new DataPoint();
+                newValley.SetValueXY(candlestick.Date, candlestick.Low);
+
+                if (!candlestick.IsValley)
+                {
+                    newValley.IsEmpty = true;
+                }
+                Chart.Series["Valleys"].Points.Add(newValley);
             }
         }
         #endregion
@@ -138,7 +134,7 @@ namespace StockDataView_v3
                     CandlestickData[i].IsPeak = true;   //sets the IsPeak property of the current candlestick to true
                     ExtremaIndices.Add(i);  //adds the index of the current candlestick to the ExtremaIndices list
 
-                    //PeakIndices.Add(i);
+                    PeakIndices.Add(i);
                 }
 
                 if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low) //if the current candlestick's low is less than the previous and next candlestick's low, it is a valley
@@ -187,44 +183,6 @@ namespace StockDataView_v3
         }
         #endregion
 
-        #region Annotations-Helpers
-        /// <summary>
-        /// Adds a circular annotation at a data point to highlight a peak or valley.
-        /// </summary>
-        /// <param name="point">The data point to anchor the annotation to.</param>
-        /// <param name="yValue">The Y-axis value used to position the annotation.</param>
-        private void AddPeakValleyAnnotation(DataPoint point, double yValue)
-        {
-            EllipseAnnotation circle = new EllipseAnnotation(); //create new ellipse annotation
-
-            //Link to specific axis system
-            circle.IsSizeAlwaysRelative = true;     //ensures the size of the annotation is relative to the chart area
-            circle.AxisX = Chart.ChartAreas[0].AxisX;   //link the annotation to the X-axis of the chart area
-            circle.AxisY = Chart.ChartAreas[0].AxisY;   //link the annotation to the Y-axis of the chart area
-            circle.ClipToChartArea = Chart.ChartAreas[0].Name;  //ensures the annotation is clipped to the chart area
-
-            //Anchor to the specific candlestick data point
-            circle.AnchorDataPoint = point; //anchor the annotation to the specific data point
-            circle.AnchorY = yValue;    //set the Y-axis value of the annotation to the specified yValue
-            circle.AnchorAlignment = System.Drawing.ContentAlignment.MiddleCenter;  //align the annotation to the center of the data point
-
-            //Set the size of the circle
-            circle.Width = 0.5;
-            circle.Height = 1.0;
-
-            //Set the color and style of the circle
-            circle.BackColor = Color.Yellow;    //set backgroung color to yellow
-            circle.LineColor = Color.Black;     //set border color to black
-            circle.LineWidth = 1;               //set border width to 1
-
-            Chart.Annotations.Add(circle);  //add the elipse annotation to the chart
-        }
-
-        private void AddPeakValleyMarker(DataPoint point, double yValue)
-        {
-            Chart.Series["PeaksAndValleys"].Points.AddXY(point.XValue, yValue);
-        }
-        #endregion
         #endregion
         #endregion
     }
