@@ -16,9 +16,8 @@ namespace StockDataView_v3
         public List<objCandlestickExtrema> CandlestickData { get; set; }  //List to hold the candlestick data
         public Chart Chart { get; set; }  //Chart object to hold the chart data
         public string FilePath { get; set; }  //File path to the CSV file containing the candlestick data
-        public List<int> ExtremaIndices { get; set; }  //List to hold the indices of the extrema in the candlestick data
-        public List<int> PeakIndices { get; set; }
-        public List<int> ValleyIndices { get; set; }
+        public List<int> PeakIndices { get; set; } //List to hold the indices of the peaks
+        public List<int> ValleyIndices { get; set; } //List to hold the indices of the valleys
         public DateTime StartDate { get; set; }  //Start date for the chart
         public DateTime EndDate { get; set; }    //End date for the chart
         #endregion
@@ -30,7 +29,8 @@ namespace StockDataView_v3
         {
             Chart = chart;
             CandlestickData = new List<objCandlestickExtrema>();
-            ExtremaIndices = new List<int>();
+            PeakIndices = new List<int>();
+            ValleyIndices = new List<int>();
         }
         #endregion
 
@@ -53,35 +53,36 @@ namespace StockDataView_v3
 
         //Peaks and Valleys-Functions
         #region Peaks and Valleys
+        /// <summary>
+        /// Adds markers to the chart's "Peaks" and "Valleys" series.
+        /// </summary>
         public void DrawPeakAndValleyMarkers()
         {
+            //clear existing markers in both series
             Chart.Series["Peaks"].Points.Clear();
             Chart.Series["Valleys"].Points.Clear();
 
             //draw peaks
             foreach (objCandlestickExtrema candlestick in CandlestickData)
             {
-                DataPoint newPeak = new DataPoint();
-                newPeak.SetValueXY(candlestick.Date, candlestick.High);
+                DataPoint newPeak = new DataPoint();    //creates a new data point for the peak
+                newPeak.SetValueXY(candlestick.Date, candlestick.High); //sets its X and Y values to the date and high of the candlestick
 
                 if (!candlestick.IsPeak)
-                {
-                    newPeak.IsEmpty = true;
-                }
-                Chart.Series["Peaks"].Points.Add(newPeak);
+                    newPeak.IsEmpty = true; //if the candlestick is not a peak, set the data point to empty
+                Chart.Series["Peaks"].Points.Add(newPeak);  //add the data point to the "Peaks" series
             }
 
             //draw valleys
             foreach (objCandlestickExtrema candlestick in CandlestickData)
             {
-                DataPoint newValley = new DataPoint();
-                newValley.SetValueXY(candlestick.Date, candlestick.Low);
+                DataPoint newValley = new DataPoint();  //creates a new data point for the valley
+                newValley.SetValueXY(candlestick.Date, candlestick.Low);  //sets its X and Y values to the date and low of the candlestick
+
 
                 if (!candlestick.IsValley)
-                {
-                    newValley.IsEmpty = true;
-                }
-                Chart.Series["Valleys"].Points.Add(newValley);
+                    newValley.IsEmpty = true; //if the candlestick is not a valley, set the data point to empty
+                Chart.Series["Valleys"].Points.Add(newValley);  //add the data point to the "Valleys" series
             }
         }
         #endregion
@@ -122,28 +123,24 @@ namespace StockDataView_v3
         }
 
         /// <summary>
-        /// Identifies the peaks and valleys in the candlestick data and stores their indices in the ExtremaIndices lists.
+        /// Identifies the peaks and valleys in the candlestick data and stores their indices in the PeakIndices and ValleyIndices lists.
         /// </summary>
         private void IdentifyPeaksAndValleys()
         {
-            ExtremaIndices.Clear(); //clears the ExtremaIndices list in preperation for the list to be remade
+            PeakIndices.Clear(); //clears the PeakIndices list in preperation for the list to be remade
+            ValleyIndices.Clear(); //clears the ValleyIndices list in preperation for the list to be remade
             for (int i = 1; i < CandlestickData.Count - 1; i++) //loops through the candlestick data starting from the second element and ending at the second to last element
             {
                 if (CandlestickData[i].High > CandlestickData[i - 1].High && CandlestickData[i].High > CandlestickData[i + 1].High) //if the current candlestick's high is greater than the previous and next candlestick's high, it is a peak
                 {
                     CandlestickData[i].IsPeak = true;   //sets the IsPeak property of the current candlestick to true
-                    ExtremaIndices.Add(i);  //adds the index of the current candlestick to the ExtremaIndices list
-
-                    PeakIndices.Add(i);
+                    PeakIndices.Add(i); //adds the index of the current candlestick to the PeakIndices list
                 }
 
                 if (CandlestickData[i].Low < CandlestickData[i - 1].Low && CandlestickData[i].Low < CandlestickData[i + 1].Low) //if the current candlestick's low is less than the previous and next candlestick's low, it is a valley
                 {
                     CandlestickData[i].IsValley = true;  //sets the IsValley property of the current candlestick to true
-                    if (!ExtremaIndices.Contains(i))    //if the index of the current candlestick is not already in the ExtremaIndices list, add it
-                        ExtremaIndices.Add(i);
-
-                    //ValleyIndices.Add(i);
+                    ValleyIndices.Add(i); //adds the index of the current candlestick to the ValleyIndices list
                 }
             }
         }
