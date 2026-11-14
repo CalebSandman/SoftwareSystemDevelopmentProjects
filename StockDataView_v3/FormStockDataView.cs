@@ -42,7 +42,7 @@ namespace StockDataView_v3
             chartManager.StartDate = dateTimePickerStartDate.Value;  //sets the start date of the chart manager to the value of the start date picker
             chartManager.EndDate = dateTimePickerEndDate.Value;  //sets the end date of the chart manager to the value of the end date picker
             chartManager.BindChartData(Text);  //binds the chart data to the chart manager using the text of the form as the file path
-            chartManager.DrawPeakAndValleyAnnotations();    //draws the annotations for peaks and valleys
+            chartManager.DrawPeakAndValleyMarkers();    //draws the markers for peaks and valleys
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace StockDataView_v3
             chartManager.StartDate = dateTimePickerStartDate.Value;  //sets the start date of the chart manager to the value of the start date picker
             chartManager.EndDate = dateTimePickerEndDate.Value;  //sets the end date of the chart manager to the value of the end date picker
             chartManager.BindChartData(Text);  //binds the chart data to the chart manager using the text of the form as the file path
-            chartManager.DrawPeakAndValleyAnnotations();    //draws the annotations for peaks and valleys
+            chartManager.DrawPeakAndValleyMarkers();    //draws the markers for peaks and valleys
         }
         #endregion
 
@@ -87,7 +87,7 @@ namespace StockDataView_v3
         #region Rubberbanding
         private void chartStockData_MouseDown(object sender, MouseEventArgs e)
         {
-            Text = "aaaaaaaa";
+            
         }
 
         private void chartStockData_MouseUp(object sender, MouseEventArgs e)
