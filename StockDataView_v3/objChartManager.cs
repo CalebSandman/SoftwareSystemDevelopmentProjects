@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace StockDataView_v3
@@ -84,6 +85,101 @@ namespace StockDataView_v3
                     newValley.IsEmpty = true; //if the candlestick is not a valley, set the data point to empty
                 Chart.Series["Valleys"].Points.Add(newValley);  //add the data point to the "Valleys" series
             }
+        }
+        #endregion
+
+        //Rubberbanding-Functions
+        #region Rubberbanding Test
+        public DataPoint FindClosestPeakOrValleyT(MouseEventArgs e, out string selectedSeries)
+        {
+            DataPoint nearestPoint = null;
+            selectedSeries = null;
+            double minDistance = double.MaxValue;
+            const double maximumDistance = 50;
+
+            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
+
+            foreach (string name in new[] { "Peaks", "Valleys" })
+            {
+                Series series = Chart.Series[name];
+                int i = 0;
+                foreach (DataPoint point in series.Points)
+                {
+                    if (point.IsEmpty)
+                    {
+                        i++;
+                        continue;
+                    }
+
+                    double x = chartArea.AxisX.ValueToPixelPosition(i + 1);
+                    double y = chartArea.AxisY.ValueToPixelPosition(point.YValues[0]);
+                    i++;
+
+                    double dx = x - e.X;
+                    double dy = y - e.Y;
+                    double distance = Math.Sqrt(dx * dx + dy * dy);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestPoint = point;
+                        selectedSeries = name;
+                    }
+                }
+            }
+
+            if (minDistance > maximumDistance)
+            {
+                nearestPoint = null;
+                selectedSeries = null;
+            }
+
+            return nearestPoint;
+        }
+        #endregion
+        #region Ruberbanding
+        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries)
+        {
+            DataPoint nearestPoint = null;
+            selectedSeries = null;
+            double minDistance = double.MaxValue;
+            const double maximumDistance = 50;
+
+            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
+
+            foreach (string name in new[] { "Peaks", "Valleys" })
+            {
+                Series series = Chart.Series[name];
+                for (int i = 0; i < series.Points.Count; i++)
+                {
+                    DataPoint point = series.Points[i];
+
+                    if (point.IsEmpty)
+                        continue;
+
+                    // The chart has one equally spaced index position per data point.
+                    double x = chartArea.AxisX.ValueToPixelPosition(i + 1);
+                    double y = chartArea.AxisY.ValueToPixelPosition(point.YValues[0]);
+
+                    double dx = x - e.X;
+                    double dy = y - e.Y;
+                    double distance = Math.Sqrt(dx * dx + dy * dy);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestPoint = point;
+                        selectedSeries = name;
+                    }
+                }
+            }
+            if (minDistance > maximumDistance)
+            {
+                nearestPoint = null;
+                selectedSeries = null;
+            }
+
+            return nearestPoint;
         }
         #endregion
 

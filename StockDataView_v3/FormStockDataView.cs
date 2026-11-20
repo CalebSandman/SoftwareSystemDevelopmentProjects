@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Serialization;
 
 namespace StockDataView_v3
@@ -85,9 +86,43 @@ namespace StockDataView_v3
 
         //Rubberbanding
         #region Rubberbanding
+        DataPoint startPoint;
+        bool isDragging = false;
+
         private void chartStockData_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            string selectedSeries;
+
+            DataPoint point = chartManager.FindClosestPeakOrValley(e, out selectedSeries);
+            startPoint = point;
+
+            isDragging = true;
+            MessageBox.Show($"MouseDown received at {e.X}, {e.Y}");
+            if (point == null)
+            {
+                MessageBox.Show("No marker found within the search radius.");
+                return;
+            }
+            /* TEST STUFF
+            HitTestResult hitResult = chartStockData.HitTest(e.X, e.Y);
+
+            if (hitResult.ChartElementType == ChartElementType.DataPoint)
+            {
+                string seriesName = hitResult.Series.Name;
+                if (seriesName == "Peaks" || seriesName == "Valleys")
+                {
+                    MessageBox.Show("clicked a peak/valley");
+                }
+                else
+                    MessageBox.Show("clicked a candlestick");
+            }
+            */
+            //MessageBox.Show("MouseDown fired");
+
+            if (point != null)
+            {
+                MessageBox.Show($"X: {point.XValue}, Y: {point.YValues[0]}");
+            }
         }
 
         private void chartStockData_MouseUp(object sender, MouseEventArgs e)
@@ -97,7 +132,10 @@ namespace StockDataView_v3
 
         private void chartStockData_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isDragging)
+            {
 
+            }
         }
         #endregion
     }
