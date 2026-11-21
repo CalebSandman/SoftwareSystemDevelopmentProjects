@@ -142,11 +142,13 @@ namespace StockDataView_v3
             if (!isDragging || trendBox.IsEmpty)
                 return;
 
-            using (Pen pen = new Pen(Color.DodgerBlue, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
+            using (Pen penUpTrend = new Pen(Color.LimeGreen, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Solid })
+            using (Pen penDownTrend = new Pen(Color.Red, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Solid })
+            using (Pen penInvalid = new Pen(Color.Gray, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
             //using (Brush fill = new SolidBrush(Color.FromArgb(40, Color.DodgerBlue)))
             {
                 //e.ChartGraphics.Graphics.FillRectangle(fill, trendBox);
-                e.ChartGraphics.Graphics.DrawRectangle(pen, trendBox);
+                e.ChartGraphics.Graphics.DrawRectangle(penInvalid, trendBox);
             }
         }
 
