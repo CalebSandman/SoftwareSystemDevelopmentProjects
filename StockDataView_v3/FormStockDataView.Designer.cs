@@ -194,6 +194,7 @@
             this.chartStockData.Size = new System.Drawing.Size(1321, 449);
             this.chartStockData.TabIndex = 10;
             this.chartStockData.Text = "chart1";
+            this.chartStockData.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.chartStockData_PostPaint);
             this.chartStockData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseDown);
             this.chartStockData.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseMove);
             this.chartStockData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chartStockData_MouseUp);

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -86,56 +87,76 @@ namespace StockDataView_v3
 
         //Rubberbanding
         #region Rubberbanding
-        DataPoint startPoint;
+        DataPoint startDataPoint;
         bool isDragging = false;
+        Rectangle trendBox;
+        private Point startPoint;
+        private Point endPoint;
 
         private void chartStockData_MouseDown(object sender, MouseEventArgs e)
-        {
+        {          
             string selectedSeries;
+            startDataPoint = chartManager.FindClosestPeakOrValley(e, out selectedSeries);
 
-            DataPoint point = chartManager.FindClosestPeakOrValley(e, out selectedSeries);
-            startPoint = point;
-
+            startPoint = e.Location;
+            endPoint = e.Location;
+            trendBox = Rectangle.Empty;
             isDragging = true;
-            MessageBox.Show($"MouseDown received at {e.X}, {e.Y}");
-            if (point == null)
-            {
-                MessageBox.Show("No marker found within the search radius.");
-                return;
-            }
-            /* TEST STUFF
-            HitTestResult hitResult = chartStockData.HitTest(e.X, e.Y);
-
-            if (hitResult.ChartElementType == ChartElementType.DataPoint)
-            {
-                string seriesName = hitResult.Series.Name;
-                if (seriesName == "Peaks" || seriesName == "Valleys")
-                {
-                    MessageBox.Show("clicked a peak/valley");
-                }
-                else
-                    MessageBox.Show("clicked a candlestick");
-            }
-            */
-            //MessageBox.Show("MouseDown fired");
-
-            if (point != null)
-            {
-                MessageBox.Show($"X: {point.XValue}, Y: {point.YValues[0]}");
-            }
         }
 
         private void chartStockData_MouseUp(object sender, MouseEventArgs e)
         {
+            if (!isDragging)
+                return;
 
+            isDragging = false;
+
+            // Ignore tiny accidental drags (plain clicks)
+            if (trendBox.Width < 3 || trendBox.Height < 3)
+                trendBox = Rectangle.Empty;
+
+            // trendBox now holds the final selection in chart pixel coordinates.
+            // startDataPoint / endDataPoint hold the closest peak/valley at each end.
+            // Do your trend calculation here if needed.
+
+            //trendBox = Rectangle.Empty;    // remove this line if you want the box to stay visible
+            //chartStockData.Invalidate();
         }
 
         private void chartStockData_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDragging)
-            {
+            if (!isDragging)
+                return;
+            
+            endPoint = new Point(
+                Math.Max(0, Math.Min(e.X, chartStockData.Width - 1)),
+                Math.Max(0, Math.Min(e.Y, chartStockData.Height - 1)));
 
+            trendBox = GetNormalizedRectangle(startPoint, endPoint);
+            chartStockData.Invalidate();
+        }
+        
+        private void chartStockData_PostPaint(object sender, ChartPaintEventArgs e)
+        {
+            // Only draw the box when there is something to draw
+            if (!isDragging || trendBox.IsEmpty)
+                return;
+
+            using (Pen pen = new Pen(Color.DodgerBlue, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
+            //using (Brush fill = new SolidBrush(Color.FromArgb(40, Color.DodgerBlue)))
+            {
+                //e.ChartGraphics.Graphics.FillRectangle(fill, trendBox);
+                e.ChartGraphics.Graphics.DrawRectangle(pen, trendBox);
             }
+        }
+
+        private Rectangle GetNormalizedRectangle(Point p1, Point p2)
+        {
+            return Rectangle.FromLTRB(
+                Math.Min(p1.X, p2.X),
+                Math.Min(p1.Y, p2.Y),
+                Math.Max(p1.X, p2.X),
+                Math.Max(p1.Y, p2.Y));
         }
         #endregion
     }
