@@ -88,7 +88,7 @@ namespace StockDataView_v3
         }
         #endregion
 
-        //Rubberbanding-Functions
+        //Trends-Functions
         #region Rubberbanding Test
         public DataPoint FindClosestPeakOrValleyT(MouseEventArgs e, out string selectedSeries)
         {
@@ -137,49 +137,10 @@ namespace StockDataView_v3
             return nearestPoint;
         }
         #endregion
-        #region Ruberbanding
-        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries)
+        #region Trends
+        public void DrawTrendBox()
         {
-            DataPoint nearestPoint = null;
-            selectedSeries = null;
-            double minDistance = double.MaxValue;
-            const double maximumDistance = 50;
 
-            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
-
-            foreach (string name in new[] { "Peaks", "Valleys" })
-            {
-                Series series = Chart.Series[name];
-                for (int i = 0; i < series.Points.Count; i++)
-                {
-                    DataPoint point = series.Points[i];
-
-                    if (point.IsEmpty)
-                        continue;
-
-                    // The chart has one equally spaced index position per data point.
-                    double x = chartArea.AxisX.ValueToPixelPosition(i + 1);
-                    double y = chartArea.AxisY.ValueToPixelPosition(point.YValues[0]);
-
-                    double dx = x - e.X;
-                    double dy = y - e.Y;
-                    double distance = Math.Sqrt(dx * dx + dy * dy);
-
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        nearestPoint = point;
-                        selectedSeries = name;
-                    }
-                }
-            }
-            if (minDistance > maximumDistance)
-            {
-                nearestPoint = null;
-                selectedSeries = null;
-            }
-
-            return nearestPoint;
         }
         #endregion
 
@@ -276,6 +237,65 @@ namespace StockDataView_v3
         }
         #endregion
 
+        #region Trends-Helpers
+        /// <summary>
+        /// Finds the nearest peak or valley to the mouse
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="selectedSeries"></param>
+        /// <returns>
+        /// <para>DataPoint var of the nearest point</para>
+        /// <parap>Output's name of series ("Peaks" or "Valleys") to a string</parap>
+        /// </returns>
+        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries)
+        {
+            //initialize variables to track nearest point and series
+            DataPoint nearestPoint = null;
+            selectedSeries = null;
+            double minDistance = double.MaxValue;
+            const double maximumDistance = 50;
+
+            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
+
+            //for each series, find the nearest point to the mouse position
+            foreach (string name in new[] { "Peaks", "Valleys" })
+            {
+                Series series = Chart.Series[name]; //get the series by name
+                for (int i = 0; i < series.Points.Count; i++)   //for each point in the series
+                {
+                    DataPoint point = series.Points[i]; //get the current point
+
+                    if (point.IsEmpty)  //if the point is empty, skip it
+                        continue;
+
+                    double x = chartArea.AxisX.ValueToPixelPosition(i + 1); //convert the X value of the point to pixel position. Use i + 1 because the X values are indexed
+                    double y = chartArea.AxisY.ValueToPixelPosition(point.YValues[0]);  //convert the Y value of the point to pixel position
+                    
+                    //calculate the distance from the mouse position to the point
+                    double dx = x - e.X;    //difference in X
+                    double dy = y - e.Y;    //difference in Y
+                    double distance = Math.Sqrt(dx * dx + dy * dy); //distance using pythagorean theorem
+
+                    //if the distance is less than the minimum distance found so far, update the nearest point and series
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestPoint = point;
+                        selectedSeries = name;
+                    }
+                }
+            }
+            //if the minimum distance is greater than the maximum distance, set the nearest point and series to null
+            if (minDistance > maximumDistance)
+            {
+                nearestPoint = null;
+                selectedSeries = null;
+            }
+
+            return nearestPoint;    //returns the nearest point found, or null if none was found within the maximum distance
+        }
+
+        #endregion
         #endregion
         #endregion
     }
