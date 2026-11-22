@@ -88,14 +88,6 @@ namespace StockDataView_v3
         }
         #endregion
 
-        //Trends-Functions
-        #region Trends
-        public void DrawTrendBox()
-        {
-
-        }
-        #endregion
-
         //Helpers - These functions do not have any output to the chart
         #region Helpers
 
@@ -110,13 +102,15 @@ namespace StockDataView_v3
         /// <para>DataPoint var of the nearest point</para>
         /// <parap>Output's name of series ("Peaks" or "Valleys") to a string</parap>
         /// </returns>
-        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries)
+        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries, out double xValuePixel, out double yValuePixel)
         {
             //initialize variables to track nearest point and series
             DataPoint nearestPoint = null;
             selectedSeries = null;
             double minDistance = double.MaxValue;
-            const double maximumDistance = 50;
+            xValuePixel = 0;
+            yValuePixel = 0;
+            //const double maximumDistance = 50;
 
             ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
 
@@ -145,15 +139,21 @@ namespace StockDataView_v3
                         minDistance = distance;
                         nearestPoint = point;
                         selectedSeries = name;
+                        xValuePixel = x;
+                        yValuePixel = y;
                     }
                 }
             }
             //if the minimum distance is greater than the maximum distance, set the nearest point and series to null
+            /*
             if (minDistance > maximumDistance)
             {
                 nearestPoint = null;
                 selectedSeries = null;
+                xValuePixel = 0;
+                yValuePixel = 0;
             }
+            */
 
             return nearestPoint;    //returns the nearest point found, or null if none was found within the maximum distance
         }
@@ -250,11 +250,6 @@ namespace StockDataView_v3
             //FormatChart();    //formats the chart to display the candlestick data
             IdentifyPeaksAndValleys();   //identifies the peaks and valleys in the candlestick data
         }
-        #endregion
-
-        //Trends-Helpers (private)
-        #region Trends-Helpers
-
         #endregion
         #endregion
         #endregion

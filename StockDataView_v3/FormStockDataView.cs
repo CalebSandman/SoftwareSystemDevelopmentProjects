@@ -92,13 +92,14 @@ namespace StockDataView_v3
         Rectangle trendBox;
         private Point startPoint;
         private Point endPoint;
+        double xValuePixel, yValuePixel;
 
         private void chartStockData_MouseDown(object sender, MouseEventArgs e)
         {          
             string selectedSeries;
-            startDataPoint = chartManager.FindClosestPeakOrValley(e, out selectedSeries);
+            startDataPoint = chartManager.FindClosestPeakOrValley(e, out selectedSeries, out xValuePixel, out yValuePixel);
 
-            startPoint = e.Location;
+            startPoint = new Point((int)xValuePixel, (int)(yValuePixel));
             endPoint = e.Location;
             trendBox = Rectangle.Empty;
             isDragging = true;
