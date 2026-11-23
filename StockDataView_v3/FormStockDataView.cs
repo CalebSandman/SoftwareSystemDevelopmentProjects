@@ -123,7 +123,7 @@ namespace StockDataView_v3
             // Do your trend calculation here if needed.
 
             //trendBox = Rectangle.Empty;    // remove this line if you want the box to stay visible
-            //chartStockData.Invalidate();
+            //chartStockData.Invalidate();            
         }
 
         private void chartStockData_MouseMove(object sender, MouseEventArgs e)
@@ -151,26 +151,37 @@ namespace StockDataView_v3
             bool draggingLeft = endPoint.X < startPoint.X;  //right-to-left drags are always invalid
             bool isUptrend = endPoint.Y < startPoint.Y; //only used for left-to-right, so "end higher than start"
 
-            //pens for uptrend, downtrend, and invalid trend boxes
+            //pens for uptrend, downtrend, and invalid trend boxes. pens/brushes for Fibonacci lines and touches
             using (Pen penUpTrend = new Pen(Color.Lime, 1.5f))
             using (Pen penDownTrend = new Pen(Color.Red, 1.5f))
             using (Pen penInvalid = new Pen(Color.Gray, 1.5f) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
+            using (Pen penFib = new Pen(Color.Black, 1.5f))
+            using (Brush brushFib = new SolidBrush(Color.Yellow))
             {
                 Graphics g = e.ChartGraphics.Graphics;  //get the graphics object from the chart event args
 
                 if (!chartManager.IsTrendBoxValid(trendBox) || draggingLeft)    //if the trend box is invalid or the user is dragging right-to-left, draw a dashed gray rectangle
                 {
-                    g.DrawRectangle(penInvalid, trendBox);
+                    g.DrawRectangle(penInvalid, trendBox);  //draw invalid trend box
                 }
                 else  //else, draw a solid rectangle and line connecting start and end point. Green for uptrend, red for downtrend
                 {
                     Pen pen = isUptrend ? penUpTrend : penDownTrend;
-                    g.DrawRectangle(pen, trendBox);
-                    g.DrawLine(pen, startPoint, endPoint);
+                    g.DrawRectangle(pen, trendBox); //draw trend box
+                    g.DrawLine(pen, startPoint, endPoint);  //draw line connecting start and end point
 
                     Point[] fibonacciPoints = GetFibonacciPoints(trendBox); //get fibonacci points within the trend box
                     foreach (Point fibPoint in fibonacciPoints)
                         g.DrawLine(pen, fibPoint.X, fibPoint.Y, trendBox.Right, fibPoint.Y);    //draw horizontal lines at the fibonacci points
+
+                    int touchCount;   //number of touches found
+                    foreach (PointF touch in chartManager.FindFibonacciTouches(trendBox, fibonacciPoints, out touchCount, 0.005))
+                    { 
+                        g.DrawEllipse(penFib, touch.X - 4, touch.Y - 4, 4, 4);  //mark every candlestick value within 1% of a fibonacci line
+                        g.FillEllipse(brushFib, touch.X - 4, touch.Y - 4, 4, 4);    //fill the touch marker
+                    }
+
+                    textBoxFibonacciTouches.Text = touchCount.ToString();   //display the number of touches found in the text box
                 }
             }
         }

@@ -37,6 +37,7 @@
             System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem3 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
             System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem4 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
             System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem5 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
+            System.Windows.Forms.DataVisualization.Charting.LegendItem legendItem6 = new System.Windows.Forms.DataVisualization.Charting.LegendItem();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -49,6 +50,8 @@
             this.buttonUpdateData = new System.Windows.Forms.Button();
             this.chartStockData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.objCandlestickExtremaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.labelFibonacciTouches = new System.Windows.Forms.Label();
+            this.textBoxFibonacciTouches = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartStockData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objCandlestickExtremaBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -129,28 +132,33 @@
             chartArea2.Position.Y = 75F;
             this.chartStockData.ChartAreas.Add(chartArea1);
             this.chartStockData.ChartAreas.Add(chartArea2);
-            legendItem1.Color = System.Drawing.Color.Lime;
-            legendItem1.Name = "Bullish (Up)";
-            legendItem2.Color = System.Drawing.Color.Red;
-            legendItem2.Name = "Bearish (Down)";
+            legendItem1.ImageStyle = System.Windows.Forms.DataVisualization.Charting.LegendImageStyle.Marker;
+            legendItem1.MarkerBorderColor = System.Drawing.Color.Black;
+            legendItem1.MarkerColor = System.Drawing.Color.Yellow;
+            legendItem1.Name = "Fib Touches";
+            legendItem2.ImageStyle = System.Windows.Forms.DataVisualization.Charting.LegendImageStyle.Marker;
+            legendItem2.MarkerBorderColor = System.Drawing.Color.Black;
+            legendItem2.MarkerColor = System.Drawing.Color.Red;
+            legendItem2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            legendItem2.Name = "Valley";
             legendItem3.Color = System.Drawing.Color.Lime;
             legendItem3.ImageStyle = System.Windows.Forms.DataVisualization.Charting.LegendImageStyle.Marker;
             legendItem3.MarkerBorderColor = System.Drawing.Color.Black;
             legendItem3.MarkerColor = System.Drawing.Color.Lime;
             legendItem3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             legendItem3.Name = "Peak";
-            legendItem4.ImageStyle = System.Windows.Forms.DataVisualization.Charting.LegendImageStyle.Marker;
-            legendItem4.MarkerBorderColor = System.Drawing.Color.Black;
-            legendItem4.MarkerColor = System.Drawing.Color.Red;
-            legendItem4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            legendItem4.Name = "Valley";
-            legendItem5.Color = System.Drawing.Color.Blue;
-            legendItem5.Name = "Volume";
+            legendItem4.Color = System.Drawing.Color.Blue;
+            legendItem4.Name = "Volume";
+            legendItem5.Color = System.Drawing.Color.Red;
+            legendItem5.Name = "Bearish (Down)";
+            legendItem6.Color = System.Drawing.Color.Lime;
+            legendItem6.Name = "Bullish (Up)";
             legend1.CustomItems.Add(legendItem1);
             legend1.CustomItems.Add(legendItem2);
             legend1.CustomItems.Add(legendItem3);
             legend1.CustomItems.Add(legendItem4);
             legend1.CustomItems.Add(legendItem5);
+            legend1.CustomItems.Add(legendItem6);
             legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
             legend1.Name = "Legend1";
             this.chartStockData.Legends.Add(legend1);
@@ -214,11 +222,31 @@
             // 
             this.objCandlestickExtremaBindingSource.DataSource = typeof(StockDataView_v3.objCandlestickExtrema);
             // 
+            // labelFibonacciTouches
+            // 
+            this.labelFibonacciTouches.AutoSize = true;
+            this.labelFibonacciTouches.Location = new System.Drawing.Point(1235, 518);
+            this.labelFibonacciTouches.Name = "labelFibonacciTouches";
+            this.labelFibonacciTouches.Size = new System.Drawing.Size(98, 13);
+            this.labelFibonacciTouches.TabIndex = 11;
+            this.labelFibonacciTouches.Text = "Fibonacci Touches";
+            // 
+            // textBoxFibonacciTouches
+            // 
+            this.textBoxFibonacciTouches.Location = new System.Drawing.Point(1233, 537);
+            this.textBoxFibonacciTouches.Name = "textBoxFibonacciTouches";
+            this.textBoxFibonacciTouches.Size = new System.Drawing.Size(100, 20);
+            this.textBoxFibonacciTouches.TabIndex = 12;
+            this.textBoxFibonacciTouches.Text = "0";
+            this.textBoxFibonacciTouches.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // FormStockDataView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1345, 566);
+            this.Controls.Add(this.textBoxFibonacciTouches);
+            this.Controls.Add(this.labelFibonacciTouches);
             this.Controls.Add(this.chartStockData);
             this.Controls.Add(this.buttonUpdateData);
             this.Controls.Add(this.labelEndDate);
@@ -250,6 +278,8 @@
         private System.Windows.Forms.Button buttonUpdateData;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartStockData;
         private System.Windows.Forms.BindingSource objCandlestickExtremaBindingSource;
+        private System.Windows.Forms.Label labelFibonacciTouches;
+        private System.Windows.Forms.TextBox textBoxFibonacciTouches;
     }
 }
 

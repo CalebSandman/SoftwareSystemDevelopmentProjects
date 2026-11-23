@@ -121,6 +121,52 @@ namespace StockDataView_v3
 
             return candlesFound > 1;    //need at least two candlesticks for a trend
         }
+
+        /// <summary>
+        /// Finds every candlestick value (Open, High, Low, Close) inside the box's horizontal span that
+        /// comes within the given percentage of a fibonacci line's price.
+        /// </summary>
+        /// <param name="box">The trend box</param>
+        /// <param name="fibPoints">The fibonacci line points (only Y is used)</param>
+        /// <param name="percent">Allowed distance as a fraction of the fib price (0.01 = 1%)</param>
+        /// <returns>Pixel positions of each touching value, for drawing markers</returns>
+        public List<PointF> FindFibonacciTouches(Rectangle box, Point[] fibPoints, out int touchCount, double percent = 0.01)
+        {
+            List<PointF> touches = new List<PointF>();
+            touchCount = touches.Count;
+            if (CandlestickData.Count == 0)
+                return touches;
+
+            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
+            const double tolerance = 1.5;   //pixels; same horizontal tolerance as IsTrendBoxValid
+
+            double[] fibPrices = fibPoints.Select(p => chartArea.AxisY.PixelPositionToValue(p.Y)).ToArray();    //convert each fib line's pixel Y back into a price
+
+            for (int i = 0; i < CandlestickData.Count; i++)
+            {
+                double x = chartArea.AxisX.ValueToPixelPosition(i + 1); //convert the X value of the candlestick to pixel position. Use i + 1 because the X values are indexed
+                if (x < box.Left - tolerance || x > box.Right + tolerance)
+                    continue;   //candlestick is outside the box horizontally
+
+                objCandlestickExtrema c = CandlestickData[i];
+                double[] values = { (double)c.Open, (double)c.High, (double)c.Low, (double)c.Close };
+
+                foreach (double value in values)
+                {
+                    foreach (double fibPrice in fibPrices)
+                    {
+                        if (Math.Abs(value - fibPrice) <= Math.Abs(fibPrice) * percent) //if the value is within the given percentage of the fibonacci price
+                        {
+                            touches.Add(new PointF((float)x, (float)chartArea.AxisY.ValueToPixelPosition(value)));  //add the pixel position of the value to the list
+                            break;  //one marker per value, even if it is near two fib lines
+                        }
+                    }
+                }
+            }
+
+            touchCount = touches.Count;
+            return touches;
+        }
         #endregion
 
         //Helpers - These functions do not have any output to the chart
@@ -289,7 +335,7 @@ namespace StockDataView_v3
 
         //Trends-Helpers (private)
         #region Trends-Helpers
-        
+
         #endregion
         #endregion
         #endregion
