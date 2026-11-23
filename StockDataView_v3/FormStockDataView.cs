@@ -64,27 +64,6 @@ namespace StockDataView_v3
         }
         #endregion
 
-
-
-
-
-
-
-/*
-* Ignore the below code.
-* It is for future development.
-*/
-
-        //Timer (Unused)
-        #region Timer (Unused)
-        int counter = 0;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            counter++;
-            Text = $"Counter: {counter}";
-        }
-        #endregion
-
         //Rubberbanding
         #region Rubberbanding
         DataPoint startDataPoint;   //the data point at the start of the drag
@@ -201,16 +180,40 @@ namespace StockDataView_v3
                 Math.Max(p1.Y, p2.Y));
         }
 
+        /// <summary>
+        /// Calculates the Y pixel positions of the Fibonacci retracement levels within the given trend box.
+        /// </summary>
+        /// <param name="trendBox"></param>
+        /// <returns></returns>
         private Point[] GetFibonacciPoints(Rectangle trendBox)
         {
-            Point[] points = new Point[5];
-            double[] fibonacciRatios = { 0.236, 0.382, 0.5, 0.618, 0.786 };
+            Point[] points = new Point[5];  //array to hold the points for the Fibonacci levels
+            double[] fibonacciRatios = { 0.236, 0.382, 0.5, 0.618, 0.786 }; //Fibonacci retracement ratios
             for (int i = 0; i < fibonacciRatios.Length; i++)
             {
-                int y = (int)(trendBox.Top + fibonacciRatios[i] * trendBox.Height);
-                points[i] = new Point(trendBox.Left, y);
+                int y = (int)(trendBox.Top + fibonacciRatios[i] * trendBox.Height); //calculate the Y pixel position for each Fibonacci level
+                points[i] = new Point(trendBox.Left, y);    //store the point in the array, using the left edge of the trend box for X
             }
             return points;
+        }
+        #endregion
+
+
+
+
+
+/*
+* Ignore the below code.
+* It is for future development.
+*/
+
+        //Timer (Unused)
+        #region Timer (Unused)
+        int counter = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            counter++;
+            Text = $"Counter: {counter}";
         }
         #endregion
     }

@@ -332,11 +332,6 @@ namespace StockDataView_v3
             IdentifyPeaksAndValleys();   //identifies the peaks and valleys in the candlestick data
         }
         #endregion
-
-        //Trends-Helpers (private)
-        #region Trends-Helpers
-
-        #endregion
         #endregion
         #endregion
     }
