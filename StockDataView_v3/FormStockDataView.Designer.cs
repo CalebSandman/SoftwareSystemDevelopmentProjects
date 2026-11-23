@@ -173,7 +173,7 @@
             series3.IsXValueIndexed = true;
             series3.Legend = "Legend1";
             series3.MarkerBorderColor = System.Drawing.Color.Black;
-            series3.MarkerColor = System.Drawing.Color.Yellow;
+            series3.MarkerColor = System.Drawing.Color.Lime;
             series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series3.Name = "Peaks";
             series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
@@ -183,7 +183,7 @@
             series4.IsXValueIndexed = true;
             series4.Legend = "Legend1";
             series4.MarkerBorderColor = System.Drawing.Color.Black;
-            series4.MarkerColor = System.Drawing.Color.Yellow;
+            series4.MarkerColor = System.Drawing.Color.Red;
             series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series4.Name = "Valleys";
             series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
@@ -191,7 +191,7 @@
             this.chartStockData.Series.Add(series2);
             this.chartStockData.Series.Add(series3);
             this.chartStockData.Series.Add(series4);
-            this.chartStockData.Size = new System.Drawing.Size(1321, 449);
+            this.chartStockData.Size = new System.Drawing.Size(1321, 471);
             this.chartStockData.TabIndex = 10;
             this.chartStockData.Text = "chart1";
             this.chartStockData.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.chartStockData_PostPaint);

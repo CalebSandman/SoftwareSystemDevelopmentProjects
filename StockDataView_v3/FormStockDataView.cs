@@ -87,20 +87,22 @@ namespace StockDataView_v3
 
         //Rubberbanding
         #region Rubberbanding
-        DataPoint startDataPoint;
-        bool isDragging = false;
-        Rectangle trendBox;
-        private Point startPoint;
-        private Point endPoint;
-        double xValuePixel, yValuePixel;
+        DataPoint startDataPoint;   //the data point at the start of the drag
+        bool isDragging = false;    //indicates whether the user is currently dragging the mouse
+        Rectangle trendBox; //the rectangle that represents the trend box
+        private Point startPoint;   //starting point of the drag
+        private Point endPoint; //ending point of the drag
+        double xValuePixel, yValuePixel;    //the pixel coordinates of the data point at the start of the drag
+        int startIndex; //the index of the data point at the start of the drag
 
         private void chartStockData_MouseDown(object sender, MouseEventArgs e)
-        {          
-            string selectedSeries;
-            startDataPoint = chartManager.FindClosestPeakOrValley(e, out selectedSeries, out xValuePixel, out yValuePixel);
+        {
+            startDataPoint = chartManager.FindClosestPeakOrValley(e, out startIndex, out xValuePixel, out yValuePixel); //find the closest peak or valley to the mouse and get its index and pixel coordinates
+            if (startDataPoint == null)
+                return;
 
-            startPoint = new Point((int)xValuePixel, (int)(yValuePixel));
-            endPoint = e.Location;
+            startPoint = new Point((int)Math.Round(xValuePixel), (int)Math.Round(yValuePixel));   //round instead of truncate
+            endPoint = startPoint;
             trendBox = Rectangle.Empty;
             isDragging = true;
         }
@@ -131,28 +133,47 @@ namespace StockDataView_v3
             
             endPoint = new Point(
                 Math.Max(0, Math.Min(e.X, chartStockData.Width - 1)),
-                Math.Max(0, Math.Min(e.Y, chartStockData.Height - 1)));
+                Math.Max(0, Math.Min(e.Y, chartStockData.Height - 1))); //calculate and keep endPoint within the chart
 
-            trendBox = GetNormalizedRectangle(startPoint, endPoint);
-            chartStockData.Invalidate();
+            trendBox = GetNormalizedRectangle(startPoint, endPoint);    //calculate the rectangle with normalized coordinates
+            
+            chartStockData.Invalidate();    //invalidate the chart to trigger repaint
         }
         
         private void chartStockData_PostPaint(object sender, ChartPaintEventArgs e)
         {
-            // Only draw the box when there is something to draw
             if (!isDragging || trendBox.IsEmpty)
                 return;
 
-            using (Pen penUpTrend = new Pen(Color.LimeGreen, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Solid })
-            using (Pen penDownTrend = new Pen(Color.Red, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Solid })
-            using (Pen penInvalid = new Pen(Color.Gray, (float)1.5) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
-            //using (Brush fill = new SolidBrush(Color.FromArgb(40, Color.DodgerBlue)))
+            bool draggingLeft = endPoint.X < startPoint.X;  //right-to-left drags are always invalid
+            bool isUptrend = endPoint.Y < startPoint.Y; //only used for left-to-right, so "end higher than start"
+
+            //pens for uptrend, downtrend, and invalid trend boxes
+            using (Pen penUpTrend = new Pen(Color.Lime, 1.5f))
+            using (Pen penDownTrend = new Pen(Color.Red, 1.5f))
+            using (Pen penInvalid = new Pen(Color.Gray, 1.5f) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
             {
-                //e.ChartGraphics.Graphics.FillRectangle(fill, trendBox);
-                e.ChartGraphics.Graphics.DrawRectangle(penInvalid, trendBox);
+                Graphics g = e.ChartGraphics.Graphics;  //get the graphics object from the chart event args
+
+                if (!chartManager.IsTrendBoxValid(trendBox) || draggingLeft)    //if the trend box is invalid or the user is dragging right-to-left, draw a dashed gray rectangle
+                {
+                    g.DrawRectangle(penInvalid, trendBox);
+                }
+                else  //else, draw a solid rectangle and line connecting start and end point. Green for uptrend, red for downtrend
+                {
+                    Pen pen = isUptrend ? penUpTrend : penDownTrend;
+                    g.DrawRectangle(pen, trendBox);
+                    g.DrawLine(pen, startPoint, endPoint);
+                }
             }
         }
 
+        /// <summary>
+        /// Creates a rectangle, always taking the smaller X and Y as the top-left and the larger X and Y as the bottom-right to avoid negative width or height.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         private Rectangle GetNormalizedRectangle(Point p1, Point p2)
         {
             return Rectangle.FromLTRB(

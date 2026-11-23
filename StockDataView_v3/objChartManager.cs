@@ -88,6 +88,41 @@ namespace StockDataView_v3
         }
         #endregion
 
+        //Trends-Functions
+        #region Trends
+        /// <summary>
+        /// A trend box is valid if no candlestick inside the box's horizontal span has a High above
+        /// the box's top or a Low below the box's bottom. Works for either drag direction.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        public bool IsTrendBoxValid(Rectangle box)
+        {
+            if (box.Width < 1 || box.Height < 1 || CandlestickData.Count == 0)  //if the box is too small or there are no candlesticks, return false
+                return false;
+
+            ChartArea chartArea = Chart.ChartAreas["AreaCandlesticks"];
+            const double tolerance = 1.5;   //pixels; absorbs rounding of the snapped start point
+            int candlesFound = 0;
+
+            for (int i = 0; i < CandlestickData.Count; i++)
+            {
+                double x = chartArea.AxisX.ValueToPixelPosition(i + 1); //convert the X value of the candlestick to pixel position. Use i + 1 because the X values are indexed
+                if (x < box.Left - tolerance || x > box.Right + tolerance)
+                    continue;   //candlestick is outside the box horizontally
+
+                candlesFound++;
+                double highPixel = chartArea.AxisY.ValueToPixelPosition((double)CandlestickData[i].High);   //convert the high value of the candlestick to pixel position
+                double lowPixel = chartArea.AxisY.ValueToPixelPosition((double)CandlestickData[i].Low); //convert the low value of the candlestick to pixel position
+
+                if (highPixel < box.Top - tolerance || lowPixel > box.Bottom + tolerance)
+                    return false;   //candlestick goes above or below the box
+            }
+
+            return candlesFound > 1;    //need at least two candlesticks for a trend
+        }
+        #endregion
+
         //Helpers - These functions do not have any output to the chart
         #region Helpers
 
@@ -102,11 +137,11 @@ namespace StockDataView_v3
         /// <para>DataPoint var of the nearest point</para>
         /// <parap>Output's name of series ("Peaks" or "Valleys") to a string</parap>
         /// </returns>
-        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out string selectedSeries, out double xValuePixel, out double yValuePixel)
+        public DataPoint FindClosestPeakOrValley(MouseEventArgs e, out int index, out double xValuePixel, out double yValuePixel)
         {
             //initialize variables to track nearest point and series
             DataPoint nearestPoint = null;
-            selectedSeries = null;
+            index = -1;
             double minDistance = double.MaxValue;
             xValuePixel = 0;
             yValuePixel = 0;
@@ -138,7 +173,7 @@ namespace StockDataView_v3
                     {
                         minDistance = distance;
                         nearestPoint = point;
-                        selectedSeries = name;
+                        index = i;
                         xValuePixel = x;
                         yValuePixel = y;
                     }
@@ -250,6 +285,11 @@ namespace StockDataView_v3
             //FormatChart();    //formats the chart to display the candlestick data
             IdentifyPeaksAndValleys();   //identifies the peaks and valleys in the candlestick data
         }
+        #endregion
+
+        //Trends-Helpers (private)
+        #region Trends-Helpers
+        
         #endregion
         #endregion
         #endregion
