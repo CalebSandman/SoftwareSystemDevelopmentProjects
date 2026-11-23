@@ -164,6 +164,10 @@ namespace StockDataView_v3
                     Pen pen = isUptrend ? penUpTrend : penDownTrend;
                     g.DrawRectangle(pen, trendBox);
                     g.DrawLine(pen, startPoint, endPoint);
+
+                    Point[] fibonacciPoints = GetFibonacciPoints(trendBox);
+                    foreach (Point fibPoint in fibonacciPoints)
+                        g.DrawLine(pen, fibPoint.X, fibPoint.Y, trendBox.Right, fibPoint.Y);
                 }
             }
         }
@@ -181,6 +185,18 @@ namespace StockDataView_v3
                 Math.Min(p1.Y, p2.Y),
                 Math.Max(p1.X, p2.X),
                 Math.Max(p1.Y, p2.Y));
+        }
+
+        private Point[] GetFibonacciPoints(Rectangle trendBox)
+        {
+            Point[] points = new Point[5];
+            double[] fibonacciRatios = { 0.236, 0.382, 0.5, 0.618, 0.786 };
+            for (int i = 0; i < fibonacciRatios.Length; i++)
+            {
+                int y = (int)(trendBox.Top + fibonacciRatios[i] * trendBox.Height);
+                points[i] = new Point(trendBox.Left, y);
+            }
+            return points;
         }
         #endregion
     }
