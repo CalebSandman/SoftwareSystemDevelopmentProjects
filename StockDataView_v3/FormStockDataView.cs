@@ -136,7 +136,10 @@ namespace StockDataView_v3
                 Math.Max(0, Math.Min(e.Y, chartStockData.Height - 1))); //calculate and keep endPoint within the chart
 
             trendBox = GetNormalizedRectangle(startPoint, endPoint);    //calculate the rectangle with normalized coordinates
-            
+
+            if (chartStockData.HitTest(e.X, e.Y).ChartArea != chartStockData.ChartAreas["AreaCandlesticks"])    //if the mouse is outside the chart area, ignore the drag
+                trendBox = Rectangle.Empty;
+
             chartStockData.Invalidate();    //invalidate the chart to trigger repaint
         }
         
@@ -165,9 +168,9 @@ namespace StockDataView_v3
                     g.DrawRectangle(pen, trendBox);
                     g.DrawLine(pen, startPoint, endPoint);
 
-                    Point[] fibonacciPoints = GetFibonacciPoints(trendBox);
+                    Point[] fibonacciPoints = GetFibonacciPoints(trendBox); //get fibonacci points within the trend box
                     foreach (Point fibPoint in fibonacciPoints)
-                        g.DrawLine(pen, fibPoint.X, fibPoint.Y, trendBox.Right, fibPoint.Y);
+                        g.DrawLine(pen, fibPoint.X, fibPoint.Y, trendBox.Right, fibPoint.Y);    //draw horizontal lines at the fibonacci points
                 }
             }
         }
